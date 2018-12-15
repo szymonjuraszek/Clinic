@@ -1,0 +1,5 @@
+spring.datasource.url=jdbc:mysql://localhost:3306/ZnanyLekarz?useSSL=false
+spring.datasource.username=szymon
+spring.datasource.password=karamba007
+
+spring.jpa.hibernate.ddl-auto=none
