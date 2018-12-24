@@ -14,4 +14,5 @@ public interface DoctorRepository extends MongoRepository<Doctor, String> {
     List<Doctor> findBySpecialization(String specialization);
 
 
+
 }

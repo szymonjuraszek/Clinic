@@ -4,6 +4,9 @@ import com.szymon.demo.collections.Doctor;
 import com.szymon.demo.collections.Patient;
 import com.szymon.demo.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +38,24 @@ public class PatientController {
     @PostMapping("/sign-up")
     public void signUp(@RequestBody Patient patient){
         patient.setPassword(bCryptPasswordEncoder.encode(patient.getPassword()));
-        patientRepository.insert(patient);
+        Patient tmpPatient = patientRepository.findByEmail(patient.getEmail());
+
+        if(tmpPatient == null){
+            patientRepository.insert(patient);
+        }else {
+            System.out.println("Podany adres email jest juz w uzytku");
+        }
+
+    }
+
+    @Secured("ROLE_PATIENT")
+    @GetMapping(path="/profile")
+    public Patient getProfile(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        System.out.println(currentPrincipalName + "pacjent");
+        Patient patient = patientRepository.findByEmail(currentPrincipalName);
+        return patient;
     }
 
 
