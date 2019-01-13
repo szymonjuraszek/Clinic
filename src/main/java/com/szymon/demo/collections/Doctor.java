@@ -2,14 +2,13 @@ package com.szymon.demo.collections;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Doctor {
+public class Doctor  {
 
     @Id
     private String id;
@@ -21,7 +20,7 @@ public class Doctor {
     private String email;
     private String password;
     private int phoneNumber;
-    private List<Visit> visitList;
+    private List<Visit> visitList = new ArrayList<>();
     private String role = "ROLE_DOCTOR";
 
     public Doctor() {
@@ -35,7 +34,6 @@ public class Doctor {
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
-        this.visitList = visitList;
     }
 
 
@@ -123,4 +121,6 @@ public class Doctor {
                 ", phoneNumber=" + phoneNumber +
                 '}';
     }
+
+
 }

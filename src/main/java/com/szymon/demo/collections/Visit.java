@@ -1,36 +1,29 @@
 package com.szymon.demo.collections;
 
-
-import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-public class Visit {
+@Document(collection = "Visit")
+public class Visit implements Comparable<Visit>{
 
-    //@Column(name = "duration")
-    private int duration;
-    //@Column(name = "type_visit")
-    private String typeVisit;
 
-    @Id
     private Date timeVisit;
 
-    /*@ManyToOne
-    @JoinColumn(name = "doctor_id")*/
-    private Doctor doctor;
-    /*@ManyToOne
-    @JoinColumn(name = "patient_id")*/
-    private Patient patient;
+    private int duration;
+    private String typeVisit;
+    private String idDoctor;
+    private String idPatient;
 
     public Visit() {
     }
 
-    public Visit(int duration, String typeVisit, Date timeVisit, Doctor doctor, Patient patient) {
+    public Visit(int duration, String typeVisit, Date timeVisit, String idDoctor, String idPatient) {
         this.duration = duration;
         this.typeVisit = typeVisit;
         this.timeVisit = timeVisit;
-        this.doctor = doctor;
-        this.patient = patient;
+        this.idDoctor = idDoctor;
+        this.idPatient = idPatient;
     }
 
     public int getDuration() {
@@ -57,20 +50,20 @@ public class Visit {
         this.timeVisit = timeVisit;
     }
 
-    public Doctor getDoctor() {
-        return doctor;
+    public String getIdDoctor() {
+        return idDoctor;
     }
 
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
+    public void setIdDoctor(String idDoctor) {
+        this.idDoctor = idDoctor;
     }
 
-    public Patient getPatient() {
-        return patient;
+    public String getIdPatient() {
+        return idPatient;
     }
 
-    public void setPatient(Patient patient) {
-        this.patient = patient;
+    public void setIdPatient(String idPatient) {
+        this.idPatient = idPatient;
     }
 
 
@@ -80,9 +73,14 @@ public class Visit {
                 "duration=" + duration +
                 ", typeVisit='" + typeVisit + '\'' +
                 ", timeVisit=" + timeVisit +
-                ", doctor=" + doctor +
-                ", patient=" + patient +
+                ", idDoctor=" + idDoctor +
+                ", idPatient=" + idPatient +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Visit o) {
+        return this.timeVisit.compareTo(o.timeVisit);
     }
 }
 

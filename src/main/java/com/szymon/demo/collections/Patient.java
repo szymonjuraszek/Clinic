@@ -18,7 +18,7 @@ public class Patient {
     private String email;
     private String password;
     private int phoneNumber;
-    private List<Visit> visits;
+    private List<Visit> visits = new ArrayList<>();
     private String role = "ROLE_PATIENT";
 
     public Patient() {
@@ -29,7 +29,7 @@ public class Patient {
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phone;
-        this.visits = new ArrayList<>();
+
     }
 
     public String getPassword() {

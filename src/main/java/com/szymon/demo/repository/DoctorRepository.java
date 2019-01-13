@@ -12,6 +12,7 @@ public interface DoctorRepository extends MongoRepository<Doctor, String> {
 
     Doctor findByEmail(String email);
     List<Doctor> findBySpecialization(String specialization);
+    Doctor findById();
 
 
 
