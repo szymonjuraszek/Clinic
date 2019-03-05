@@ -1,0 +1,24 @@
+<form (ngSubmit)="login(formData)" #formData="ngForm">
+  <h1>Podaj dane do logowania</h1>
+  <div class="logPanel">
+    <div class="inputButton">
+      <label>E-mail</label>
+      <input ngModel type="email" #email="ngModel" name="email" email required>
+      <div *ngIf="!email.valid && email.dirty">Pole wymagane!</div>
+    </div>
+
+    <div class="inputButton">
+      <label>Haslo</label>
+      <input ngModel type="password" #password="ngModel" name="password" required>
+      <div *ngIf="!password.valid && password.dirty">Pole wymagane!</div>
+    </div>
+
+    <div class="log">
+      <button type="submit" [disabled]="formData.invalid">Zaloguj</button>
+    </div>
+    <h5>Jesli nie masz konta zaloz je juz teraz!</h5>
+    <a routerLink="/RegisterPage">Zarejestruj sie</a>
+
+  </div>
+
+</form>

@@ -1,0 +1,47 @@
+<div *ngIf="doctor">
+  <div>
+    Aby moc sie umowic na wizyte(tylko pacjenci)
+    <a routerLink="/loginPage">zaloguj sie!</a> <br> <br> <br>
+  </div>
+
+  <div id="infoAboutDoctor">
+      Imie: {{doctor.firstName}} <br>
+      Nazwisko: {{doctor.lastName}} <br>
+      Telefon: {{doctor.phoneNumber}} <br>
+      specializacja: {{doctor.specialization}}  <br><br><br>
+      <p *ngFor="let visit of doctor.visitList">
+          data wizyty:{{ visit.timeVisit | date: 'medium' }} <br>
+          czas trwania:{{visit.duration}} <br>
+
+      </p>
+
+
+  </div>
+
+  <div *ngIf="idTokenn"  id="orderVisitTemplate">
+
+    <form (ngSubmit)="order(formData)" #formData="ngForm">
+      <h3>Wypelnij formularz zeby umowic wizyte</h3>
+      Wybierz date wizyty: <br>
+      <input [ngModel] ="tmpDate" id="dateOfVisit" name="dateOfVisit" type="date" required>
+      <br>
+
+      Wybierz godzine w ktorej przyjmie Cie lekarz: <br>
+      <select ngModel id="select" name="listHours" required>
+        <option *ngFor="let timeVisit of timeVisits" [value]="timeVisit.name">
+          <p >{{timeVisit.name}}</p>
+        </option>
+      </select>
+
+      <div class="orederVisitButton">
+        <button type="submit" [disabled]="formData.invalid">Umow wizyte</button>
+      </div>
+
+    </form>
+
+  </div>
+  <div id="usun"></div>
+
+</div>
+
+

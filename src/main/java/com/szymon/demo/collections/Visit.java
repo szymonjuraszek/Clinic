@@ -8,7 +8,8 @@ import java.util.Date;
 public class Visit implements Comparable<Visit>{
 
 
-    private Date timeVisit;
+    private Date expireAt;
+    private int expireAfterSeconds = 60;
 
     private int duration;
     private String typeVisit;
@@ -21,7 +22,7 @@ public class Visit implements Comparable<Visit>{
     public Visit(int duration, String typeVisit, Date timeVisit, String idDoctor, String idPatient) {
         this.duration = duration;
         this.typeVisit = typeVisit;
-        this.timeVisit = timeVisit;
+        this.expireAt = timeVisit;
         this.idDoctor = idDoctor;
         this.idPatient = idPatient;
     }
@@ -43,11 +44,11 @@ public class Visit implements Comparable<Visit>{
     }
 
     public Date getTimeVisit() {
-        return timeVisit;
+        return expireAt;
     }
 
     public void setTimeVisit(Date timeVisit) {
-        this.timeVisit = timeVisit;
+        this.expireAt = timeVisit;
     }
 
     public String getIdDoctor() {
@@ -72,7 +73,7 @@ public class Visit implements Comparable<Visit>{
         return "Visit{" +
                 "duration=" + duration +
                 ", typeVisit='" + typeVisit + '\'' +
-                ", timeVisit=" + timeVisit +
+                ", timeVisit=" + expireAt +
                 ", idDoctor=" + idDoctor +
                 ", idPatient=" + idPatient +
                 '}';
@@ -80,7 +81,7 @@ public class Visit implements Comparable<Visit>{
 
     @Override
     public int compareTo(Visit o) {
-        return this.timeVisit.compareTo(o.timeVisit);
+        return this.expireAt.compareTo(o.expireAt);
     }
 }
 

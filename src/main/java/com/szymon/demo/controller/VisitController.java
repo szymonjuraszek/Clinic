@@ -44,6 +44,7 @@ public class VisitController {
 
 
         visit.setIdPatient(patient.getId());
+        System.out.println(visit.getTimeVisit());
 
 
         for (Visit tmpVisit: doctor.get().getVisitList()) {

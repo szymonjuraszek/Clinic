@@ -1,0 +1,52 @@
+<form (ngSubmit)="register(formData,patient)" #formData="ngForm">
+  <h1>Zarejestruj sie</h1>
+  <div>
+    <div class="radioButton">
+      <label>
+        <input type="radio" value="patient" name="person" #patient checked>Patient
+      </label>
+      <label>
+        <input type="radio" value="doctor" name="person" #doctor>Doctor
+      </label>
+    </div>
+
+    <div class="inputButton">
+      <label>E-mail</label>
+      <input ngModel type="email" #email="ngModel" name="email" email required>
+      <div *ngIf="!email.valid && email.dirty">Pole wymagane!</div>
+
+    </div>
+
+    <div class="inputButton">
+      <label>Password</label>
+      <input ngModel type="password" #password="ngModel" name="password" required>
+      <div *ngIf="!password.valid && password.dirty">Pole wymagane!</div>
+
+    </div>
+
+    <div class="inputButton">
+      <label>First-name</label>
+      <input ngModel type="text" name="firstName" required>
+    </div>
+
+    <div class="inputButton">
+      <label>Last-name</label>
+      <input ngModel type="text" name="lastName" required>
+    </div>
+
+    <div class="inputButton">
+      <label>Phone-number</label>
+      <input ngModel type="tel" name="phoneNumber" required>
+    </div>
+
+    <div class="inputButton" *ngIf="doctor.checked == true">
+      <label>Specialization</label>
+      <input ngModel type="text" name="specialization" required>
+    </div>
+
+    <div class="registerButton">
+      <button type="submit" [disabled]="formData.invalid">Zarejestruj</button>
+    </div>
+  </div>
+
+</form>

@@ -1,0 +1,15 @@
+
+<div>
+  <h1>Witaj na stronie glownej</h1>
+
+  <h5>Znajdz lekarza(podaj specializacje)</h5>
+  <input ngModel type="text" name="specialization" #specialization>
+  <button (click)="searchDoctors(specialization)">Search</button>
+
+
+  <app-item [doctors]="doctors"></app-item>
+
+
+
+
+</div>

@@ -1,0 +1,28 @@
+<div *ngIf="patient">
+
+  Imie: {{patient.firstName}} <br>
+  Nazwisko: {{patient.lastName}} <br><br><br>
+  Lista twoich wizyt:<br><br>
+  <p *ngFor="let visit of patient.visits">
+      dzien wizyty: {{ visit.timeVisit | date: 'medium' }} <br>
+      czas trwania: {{visit.duration}} <br>
+      typ wizyty: {{visit.typeVisit}} <br>
+      id doctora: {{visit.idDoctor}} <br>
+  </p>
+</div>
+
+<div *ngIf="doctor">
+
+  Imie: {{doctor.firstName}} <br>
+  Nazwisko: {{doctor.lastName}} <br>
+  specializacja: {{doctor.specialization}} <br><br><br>
+  Lista twoich wizyt:<br><br>
+  <p *ngFor="let visit of doctor.visitList">
+    dzien wizyty: {{ visit.timeVisit | date: 'medium' }} <br>
+    czas trwania: {{visit.duration}} <br>
+    typ wizyty: {{visit.typeVisit}} <br>
+    id doctora: {{visit.idDoctor}} <br>
+  </p>
+
+</div>
+
