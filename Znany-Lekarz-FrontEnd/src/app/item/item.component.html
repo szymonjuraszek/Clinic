@@ -1,12 +1,9 @@
-<p>
-  <li *ngFor="let doctor of doctors">
+<ol *ngFor="let doctor of doctors">
+  <div class="itemDoctor">
+    <h5>
+      <a routerLink="/DoctorTmp/{{doctor.id}}" (click)="sendData(doctor)">{{doctor.firstName}} {{doctor.lastName}}</a>
+    </h5>
+    <p>{{doctor.specialization}}</p>
+  </div>
+</ol>
 
-    <div class="itemDoctor">
-        <h5>
-          <a routerLink="/DoctorTmp/{{doctor.id}}" (click)="sendData(doctor)">{{doctor.firstName}} {{doctor.lastName}}</a>
-        </h5>
-        <p>{{doctor.specialization}}</p>
-    </div>
-  </li>
-
-</p>

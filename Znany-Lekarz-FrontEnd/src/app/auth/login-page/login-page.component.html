@@ -16,6 +16,9 @@
     <div class="log">
       <button type="submit" [disabled]="formData.invalid">Zaloguj</button>
     </div>
+
+    <div class="error" *ngIf="!email.valid && email.dirty">Serwer jest niedostępny!</div>
+
     <h5>Jesli nie masz konta zaloz je juz teraz!</h5>
     <a routerLink="/RegisterPage">Zarejestruj sie</a>
 

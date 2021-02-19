@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpService } from '../http.service';
+import { HttpService } from '../http-service/http.service';
 import { Doctor } from '../model/doctor';
 import { Patient } from '../model/patient';
 import { CookieService } from 'ngx-cookie-service';
@@ -23,12 +23,12 @@ export class UserProfileComponent implements OnInit {
 
 
     if (this.userInfoFromToken.authorities[0].toString() === 'ROLE_DOCTOR') {
-      this.http.getDoctorProfil().subscribe((data) => {
+      this.http.getDoctorProfile().subscribe((data) => {
          this.doctor = data;
         // console.log(this.doctor);
       });
     } else if (this.userInfoFromToken.authorities[0].toString() === 'ROLE_PATIENT') {
-      this.http.getPatientProfil().subscribe((data) => {
+      this.http.getPatientProfile().subscribe((data) => {
          this.patient = data;
         // console.log(this.patient);
       });

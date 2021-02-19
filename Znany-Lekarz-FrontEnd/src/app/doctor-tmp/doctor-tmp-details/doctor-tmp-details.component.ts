@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { HttpService } from 'src/app/http.service';
+import { HttpService } from 'src/app/http-service/http.service';
 import { ActivatedRoute, Params} from '@angular/router';
 import { Doctor } from 'src/app/model/doctor';
 import { CookieService } from 'ngx-cookie-service';

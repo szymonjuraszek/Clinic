@@ -24,3 +24,8 @@ h1
   text-align: left;
 }
 
+.error-message {
+  text-align: center;
+  color: red;
+}
+

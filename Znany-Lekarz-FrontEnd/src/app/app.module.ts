@@ -4,8 +4,8 @@ import {FormsModule} from '@angular/forms';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { HttpService } from './http.service';
-import { AppRountingModule } from './app.routing.module';
+import { HttpService } from './http-service/http.service';
+import { AppRoutingModule } from './app.routing.module';
 import { HomeComponent } from './home/home.component';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -25,6 +25,7 @@ import 'core-js/es7/reflect';
 import 'zone.js/dist/zone';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -43,9 +44,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AppRountingModule,
+    AppRoutingModule,
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgbModule.forRoot()
   ],
   providers: [HttpService, AuthService, LocalService, CookieService,
   {

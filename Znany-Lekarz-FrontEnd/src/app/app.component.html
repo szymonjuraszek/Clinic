@@ -1,17 +1,13 @@
-<!-- <button (click)="getPatients()">Pobierz pacjentow</button>
-<button (click)="getDoctors()">Pobierz doktorow</button>
-<button (click)="getPatient()">Pobierz jednego pacjenta</button>
-<button (click)="addPatientt()">Dodaj pacjenta</button>-->
 <body>
   <header class="logo">
     <h1>Znany lekarz</h1>
 
     <nav>
       <ul class="menu">
-        <li><a routerLink="/home">--Home--</a></li>
-        <li><a routerLink="/loginPage">--Login--</a></li>
-        <li><a routerLink="/RegisterPage">--Register page--</a></li>
-        <li><a *ngIf="authService.userStatus" routerLink="/UserProfile">--Profile--</a></li>
+        <li><a routerLink="/home">--Strona Główna--</a></li>
+        <li><a routerLink="/loginPage">--Logowanie--</a></li>
+        <li><a routerLink="/RegisterPage">--Rejestracja--</a></li>
+        <li><a *ngIf="authService.userStatus" routerLink="/UserProfile">--Profil--</a></li>
         <button *ngIf="authService.userStatus" (click)="logout()">Wyloguj</button>
       </ul>
     </nav>

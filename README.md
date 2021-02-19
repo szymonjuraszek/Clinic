@@ -1,6 +1,9 @@
 # Clinic
 
-Program przedstawia strone internetowa na ktorej mozna zarezerwowac wizyte do wybranego lekarza.Istenieje mozliwosc stworzenie konta dla lekarza jak i dla pacjenta.
-Lekarze nie moga umawiac sie na wizyty. Dodatkowo na stronie znajduje sie prosta wyszukiwarka ktora znajduje lekarzy po ich specializacji.
+Program przestawia strone internetowa do umawiania wizyt u lekarzy. Zawiera prosta wyszukiwarke do znajdowania lekarza wedlug ich specjalizacji.
+Mozna utworzyc konto dla lekarza oraz pacjenta.
 
-Zabezpieczenia sa zrealizowane za pomoca jwt tokens (tokeny). Backend napisany w springu natomiast Frontend w Angular CLI.
+Uwierzytelnianie następuje poprzez przeslanie poprawnego emaila oraz hasla. Po poprawnym procesie uzytkownik otrzymuje token JWT ktory sluzy do autoryzacji.
+Zaimplementowane jest takze odswierzanie tokena (tylko jeden raz)
+
+Projekt stworzony za pomoca Angular 2+ oraz Spring.

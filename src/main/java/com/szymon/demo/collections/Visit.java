@@ -1,19 +1,24 @@
 package com.szymon.demo.collections;
 
+import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
+@Data
 @Document(collection = "Visit")
-public class Visit implements Comparable<Visit>{
-
+public class Visit implements Comparable<Visit> {
 
     private Date expireAt;
+
     private int expireAfterSeconds = 60;
 
     private int duration;
+
     private String typeVisit;
+
     private String idDoctor;
+
     private String idPatient;
 
     public Visit() {
@@ -27,56 +32,12 @@ public class Visit implements Comparable<Visit>{
         this.idPatient = idPatient;
     }
 
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public String getTypeVisit() {
-        return typeVisit;
-    }
-
-    public void setTypeVisit(String typeVisit) {
-        this.typeVisit = typeVisit;
-    }
-
     public Date getTimeVisit() {
         return expireAt;
     }
 
     public void setTimeVisit(Date timeVisit) {
         this.expireAt = timeVisit;
-    }
-
-    public String getIdDoctor() {
-        return idDoctor;
-    }
-
-    public void setIdDoctor(String idDoctor) {
-        this.idDoctor = idDoctor;
-    }
-
-    public String getIdPatient() {
-        return idPatient;
-    }
-
-    public void setIdPatient(String idPatient) {
-        this.idPatient = idPatient;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Visit{" +
-                "duration=" + duration +
-                ", typeVisit='" + typeVisit + '\'' +
-                ", timeVisit=" + expireAt +
-                ", idDoctor=" + idDoctor +
-                ", idPatient=" + idPatient +
-                '}';
     }
 
     @Override
