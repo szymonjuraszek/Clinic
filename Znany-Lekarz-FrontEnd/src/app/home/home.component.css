@@ -1,7 +1,17 @@
 div
 {
-  margin-top: 40px;
+  margin-top: 10px;
   text-align: center;
 }
 
+.form-control {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  width: 300px;
+  margin-bottom: 10px;
+}
 
+.not-found-message {
+  color: red;
+}

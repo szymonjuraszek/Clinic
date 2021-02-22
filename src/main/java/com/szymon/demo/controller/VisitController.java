@@ -6,14 +6,14 @@ import com.szymon.demo.collections.Visit;
 import com.szymon.demo.exceptions.VisitDoctorBusyException;
 import com.szymon.demo.repository.DoctorRepository;
 import com.szymon.demo.repository.PatientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -22,51 +22,46 @@ import java.util.Optional;
 @RequestMapping(path = "/visit")
 public class VisitController {
 
-    @Autowired
-    PatientRepository patientRepository;
-    @Autowired
-    DoctorRepository doctorRepository;
+    private final Logger logger = LoggerFactory.getLogger(VisitController.class);
+
+    private final PatientRepository patientRepository;
+
+    private final DoctorRepository doctorRepository;
+
+    public VisitController(PatientRepository patientRepository, DoctorRepository doctorRepository) {
+        this.patientRepository = patientRepository;
+        this.doctorRepository = doctorRepository;
+    }
 
     @PostMapping(path = "/order")
     @Secured({"ROLE_PATIENT"})
-    public ResponseEntity<Object> orderVisit(@RequestBody Visit visit) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String patientEmail = authentication.getName();
-        System.out.println("Jestem w funkcji order");
+    public ResponseEntity<Object> orderVisit(@RequestBody Visit visit, Principal principal) {
 
-        // System.out.println(visit);
-        // find Doctor and Patient
         Optional<Doctor> doctor = doctorRepository.findById(visit.getIdDoctor());
-        Patient patient = patientRepository.findByEmail(patientEmail);
+        Optional<Patient> patient = patientRepository.findByEmail(principal.getName());
 
-//        System.out.println(doctor);
-//        System.out.println(patient.getVisits());
+        if (patient.isEmpty() || doctor.isEmpty()) {
+            return null;
+        }
 
+        visit.setIdPatient(patient.get().getId());
 
-        visit.setIdPatient(patient.getId());
-        System.out.println(visit.getTimeVisit());
-
-
-        for (Visit tmpVisit: doctor.get().getVisitList()) {
-            if(tmpVisit.getTimeVisit().equals(visit.getTimeVisit())) {
+        for (Visit tmpVisit : doctor.get().getVisitList()) {
+            if (tmpVisit.getTimeVisit().equals(visit.getTimeVisit())) {
                 throw new VisitDoctorBusyException("visit-" + visit);
             }
         }
 
         doctor.get().getVisitList().add(visit);
-        patient.getVisits().add(visit);
-
+        patient.get().getVisits().add(visit);
 
         doctorRepository.save(doctor.get());
-        patientRepository.save(patient);
+        patientRepository.save(patient.get());
 
-        System.out.println(doctor.get().getVisitList());
-        System.out.println(patient.getVisits());
-
-        return new ResponseEntity<> (HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping(path="/sort/{id}")
+    @GetMapping(path = "/sort/{id}")
     @Secured({"ROLE_PATIENT"})
     public List<Visit> sortVisitByTime(@PathVariable String id) {
 

@@ -2,5 +2,17 @@
   "/login": {
     "target": "http://localhost:8080",
     "secure": false
+  },
+  "/doctor/*": {
+    "target": "http://localhost:8080",
+    "secure": false
+  },
+  "/patient/*": {
+    "target": "http://localhost:8080",
+    "secure": false
+  },
+  "/visit/*": {
+    "target": "http://localhost:8080",
+    "secure": false
   }
 }

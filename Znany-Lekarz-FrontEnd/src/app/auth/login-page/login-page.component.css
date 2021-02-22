@@ -26,6 +26,10 @@ h1
   margin-bottom: 10px;
 }
 
+.error{
+  color: red;
+}
+
 h5
 {
   margin-top: 20px;

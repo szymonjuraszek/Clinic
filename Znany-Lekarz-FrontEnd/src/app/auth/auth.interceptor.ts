@@ -11,11 +11,7 @@ export class AuthInerceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>,
      next: HttpHandler): Observable<HttpEvent<any>> {
 
-      // const idToken = localStorage.getItem('id_token');
       const idToken = this.cookieService.get('access_token');
-      // this.cookieService.delete('access_token');
-
-      console.log('Na zewnatrz');
 
       if (idToken) {
         const cloned = req.clone({
@@ -24,7 +20,6 @@ export class AuthInerceptor implements HttpInterceptor {
         });
 
         return next.handle(cloned);
-
       } else {
         return next.handle(req);
       }

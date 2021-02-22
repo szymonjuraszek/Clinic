@@ -1,53 +1,32 @@
 package com.szymon.demo.service;
 
-import com.szymon.demo.collections.Doctor;
-import com.szymon.demo.collections.Patient;
-import com.szymon.demo.repository.DoctorRepository;
-import com.szymon.demo.repository.PatientRepository;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import com.szymon.demo.collections.User;
+import com.szymon.demo.repository.UserRepository;
+import com.szymon.demo.security.MyUserDetails;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private DoctorRepository doctorRepository;
-    private PatientRepository patientRepository;
+    private final UserRepository userRepository;
 
-    public UserDetailsServiceImpl(DoctorRepository doctorRepository,PatientRepository patientRepository) {
-        this.doctorRepository = doctorRepository;
-        this.patientRepository = patientRepository;
+    public UserDetailsServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> user = userRepository.findByEmail(username);
 
-        if(doctorRepository.findByEmail(username) != null){
-            Doctor applicationDoctor = doctorRepository.findByEmail(username);
-
-            return new org.springframework.security.core.userdetails.User(applicationDoctor.getEmail(), applicationDoctor.getPassword(), getAuthorities(applicationDoctor.getRole()));
-        }else if(patientRepository.findByEmail(username) != null){
-            Patient applicationPatient = patientRepository.findByEmail(username);
-            return new org.springframework.security.core.userdetails.User(applicationPatient.getEmail(), applicationPatient.getPassword(),  getAuthorities(applicationPatient.getRole()));
-        }else {
-            throw new UsernameNotFoundException(username);
+        if(user.isEmpty()) {
+            throw new UsernameNotFoundException("Credentials not exist in database. Can't log in.");
         }
 
+        return new MyUserDetails(user.get());
     }
-
-    private List<GrantedAuthority> getAuthorities(String privilege) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-
-        authorities.add(new SimpleGrantedAuthority(privilege));
-
-        return authorities;
-    }
-
-
 }

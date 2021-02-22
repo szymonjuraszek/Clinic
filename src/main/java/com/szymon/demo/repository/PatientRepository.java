@@ -1,9 +1,9 @@
 package com.szymon.demo.repository;
 
-import com.szymon.demo.collections.Doctor;
 import com.szymon.demo.collections.Patient;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.repository.CrudRepository;
+
+import java.util.Optional;
 
 public interface PatientRepository extends MongoRepository<Patient, String> {
 
@@ -17,5 +17,5 @@ public interface PatientRepository extends MongoRepository<Patient, String> {
         return null;
     }
 
-    Patient findByEmail(String email);
+    Optional<Patient> findByEmail(String email);
 }
