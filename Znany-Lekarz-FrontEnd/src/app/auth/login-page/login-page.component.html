@@ -19,6 +19,8 @@
 
     <div class="error" *ngIf="!email.valid && email.dirty">Serwer jest niedostępny!</div>
 
+    <div class="error-message">{{this.errorMessage}}</div>
+
     <h5>Jesli nie masz konta zaloz je juz teraz!</h5>
     <a routerLink="/RegisterPage">Zarejestruj sie</a>
 
