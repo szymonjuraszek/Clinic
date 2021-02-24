@@ -16,6 +16,6 @@ export class ItemComponent {
   doctors: Doctor[];
 
   sendData(doctor: Doctor) {
-    this.localService.doctor = doctor;
+    // this.localService.doctor = doctor;
   }
 }

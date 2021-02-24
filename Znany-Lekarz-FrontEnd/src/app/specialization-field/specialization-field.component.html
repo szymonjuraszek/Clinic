@@ -1,0 +1,13 @@
+<label for="typeahead-focus"></label>
+<input
+  id="typeahead-focus"
+  type="text"
+  class="form-control"
+  [ngbTypeahead]="search"
+  (focus)="onFocus($event)"
+  (click)="onClick($event)"
+  (keyup)="onKey($event)"
+  #instance="ngbTypeahead"
+/>
+
+

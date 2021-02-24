@@ -1,20 +1,11 @@
-<div *ngIf="isDataAvailable">
+<div *ngIf="this.doctorSpecializations">
   <h1>Witaj na stronie glownej</h1>
 
   <h5>Znajdz lekarza (podaj specializacje)</h5>
   <div>
-    <label for="typeahead-focus"></label>
-    <input
-      id="typeahead-focus"
-      type="text"
-      class="form-control"
-      [ngbTypeahead]="search"
-      (focus)="focus$.next($any($event).target.value)"
-      (click)="click$.next($any($event).target.value)"
-      #instance="ngbTypeahead"
-      #mySpecialization
-    />
-    <button (click)="searchDoctors(mySpecialization)">Szukaj</button>
+    <app-specialization-field [doctorSpecializations]="doctorSpecializations"
+                              (specializationEvent)="setSpecialization($event)"></app-specialization-field>
+    <button (click)="searchDoctors(this.specialization) ">Szukaj</button>
   </div>
 
   <div class="not-found-message">{{this.notFoundMessage}}</div>

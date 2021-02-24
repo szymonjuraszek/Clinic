@@ -26,6 +26,7 @@ import 'zone.js/dist/zone';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SpecializationFieldComponent } from './specialization-field/specialization-field.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ItemComponent,
     UserProfileComponent,
     DoctorTmpDetailsComponent,
+    SpecializationFieldComponent,
 
   ],
   imports: [

@@ -1,4 +1,5 @@
 import { Visit } from './visit';
+import {Address} from "./Address";
 
 export interface Doctor {
   id?: string;
@@ -9,4 +10,5 @@ export interface Doctor {
   password?: string;
   phoneNumber?: number;
   visitList?: Array<Visit>;
+  places?: Array<Address>;
 }

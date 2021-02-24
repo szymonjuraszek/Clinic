@@ -4,6 +4,10 @@ import {NgForm} from '@angular/forms';
 import {Patient} from 'src/app/model/patient';
 import {Doctor} from 'src/app/model/doctor';
 import {Router} from "@angular/router";
+import {merge, Observable, Subject} from "rxjs";
+import {debounceTime, distinctUntilChanged, filter, map} from "rxjs/operators";
+import {NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
+import {LocalCacheService} from "../../service/local-cache.service";
 
 
 @Component({
@@ -18,7 +22,12 @@ export class RegisterPageComponent {
 
   errorMessage: string;
 
-  constructor(private authService: AuthService, private router: Router) {
+  specialization: String;
+
+  doctorSpecializations: Array<String>;
+
+  constructor(private authService: AuthService, private router: Router, private localCacheService: LocalCacheService) {
+    this.doctorSpecializations = this.localCacheService.getDoctorSpecializations();
   }
 
   register(formData: NgForm, patientRadioButton) {
@@ -48,6 +57,10 @@ export class RegisterPageComponent {
 
       this.formData.reset();
     }
+  }
+
+  setSpecialization(specialization: string) {
+    this.specialization = specialization;
   }
 }
 
