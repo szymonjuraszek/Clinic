@@ -20,10 +20,6 @@ const appRoutes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'loginPage',
-    component: LoginPageComponent
-  },
-  {
     path: 'UserProfile',
     component: UserProfileComponent,
   },
@@ -39,6 +35,10 @@ const appRoutes: Routes = [
   {
     path: 'RegisterPage',
     component: RegisterPageComponent
+  },
+  {
+    path: 'loginPage',
+    component: LoginPageComponent
   },
   {
     path: '**',

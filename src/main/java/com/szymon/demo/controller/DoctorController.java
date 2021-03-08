@@ -85,10 +85,8 @@ public class DoctorController {
 
             return ResponseEntity.created(location).build();
         } else {
-            new EmailUserBusyException("email-" + email);
+            throw new EmailUserBusyException("email-" + email);
         }
-
-        return (ResponseEntity<Object>) ResponseEntity.badRequest();
     }
 
     @GetMapping(path = "/id/{id}")

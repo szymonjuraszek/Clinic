@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent{
 
   constructor(private authService: AuthService, private router: Router) {
   }
@@ -18,9 +18,6 @@ export class LoginPageComponent implements OnInit {
   formData: NgForm;
 
   errorMessage: string;
-
-  ngOnInit() {
-  }
 
   login(formData: NgForm) {
     this.errorMessage = '';

@@ -25,7 +25,7 @@ export class HomeComponent {
     this.doctorSpecializations = this.localCacheService.getDoctorSpecializations();
     this.specializationSubscription = this.localCacheService.getDoctorSpecializationsSubject().subscribe( (specializations) => {
       this.doctorSpecializations = specializations;
-    })
+    });
   }
 
   searchDoctors(specialization: string) {

@@ -27,6 +27,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SpecializationFieldComponent } from './specialization-field/specialization-field.component';
+import {PasswordValidatorDirective} from "./auth/register-page/directive/password-validator.directive";
 
 
 @NgModule({
@@ -40,7 +41,7 @@ import { SpecializationFieldComponent } from './specialization-field/specializat
     UserProfileComponent,
     DoctorTmpDetailsComponent,
     SpecializationFieldComponent,
-
+    PasswordValidatorDirective
   ],
   imports: [
     BrowserModule,

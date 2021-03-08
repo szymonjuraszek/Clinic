@@ -4,7 +4,7 @@ import {NgForm} from '@angular/forms';
 import {Patient} from 'src/app/model/patient';
 import {Doctor} from 'src/app/model/doctor';
 import {Router} from "@angular/router";
-import {merge, Observable, Subject} from "rxjs";
+import {merge, Observable, Subject, Subscription} from "rxjs";
 import {debounceTime, distinctUntilChanged, filter, map} from "rxjs/operators";
 import {NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
 import {LocalCacheService} from "../../service/local-cache.service";
@@ -22,36 +22,33 @@ export class RegisterPageComponent {
 
   errorMessage: string;
 
-  specialization: String;
-
-  doctorSpecializations: Array<String>;
-
-  constructor(private authService: AuthService, private router: Router, private localCacheService: LocalCacheService) {
-    this.doctorSpecializations = this.localCacheService.getDoctorSpecializations();
+  constructor(private authService: AuthService, private router: Router) {
   }
 
-  register(formData: NgForm, patientRadioButton) {
+  register(patientRadioButton) {
     this.errorMessage = '';
 
     if (patientRadioButton.checked) {
 
-      const patientTmp: Patient = formData.value;
+      const patientTmp: Patient = this.formData.value;
 
       console.error(patientTmp)
       this.authService.registerPatient(patientTmp).subscribe((res) => {
         this.router.navigate(['/loginPage']);
       }, error => {
+        console.error(error);
         this.errorMessage = 'Blad podczas rejestracji';
       });
 
       this.formData.reset();
 
     } else {
-      const doctorTmp: Doctor = formData.value
+      const doctorTmp: Doctor = this.formData.value
 
       this.authService.registerDoctor(doctorTmp).subscribe((res) => {
         this.router.navigate(['/loginPage']);
       }, error => {
+        console.error(error);
         this.errorMessage = 'Blad podczas rejestracji';
       });
 
@@ -59,8 +56,9 @@ export class RegisterPageComponent {
     }
   }
 
-  setSpecialization(specialization: string) {
-    this.specialization = specialization;
+  handleChange(evt) {
+    this.formData.reset();
+    console.debug('Changed register form to: ' + evt.target.value)
   }
 }
 

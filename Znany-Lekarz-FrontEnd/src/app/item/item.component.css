@@ -8,3 +8,7 @@
   margin-right: auto;
   border-radius: 5%;
 }
+
+ol {
+  padding: 0;
+}
