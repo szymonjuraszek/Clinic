@@ -1,9 +1,18 @@
-div
-{
-  margin-top: 10px;
+div {
   text-align: center;
+  background-color: #00C3A5;
+  color: white;
+  padding-bottom: 30px;
 }
 
 .not-found-message {
   color: red;
+}
+
+h5 {
+  padding-top: 40px;
+}
+
+#founded-doctors {
+  background-color: #ffffff;
 }

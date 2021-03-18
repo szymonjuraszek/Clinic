@@ -3,20 +3,34 @@ package com.szymon.demo;
 import com.szymon.demo.collections.Doctor;
 import com.szymon.demo.collections.Patient;
 import com.szymon.demo.collections.User;
-import com.szymon.demo.repository.DoctorRepository;
-import com.szymon.demo.repository.PatientRepository;
+import com.szymon.demo.repository.doctor.DoctorRepository;
+import com.szymon.demo.repository.patient.PatientRepository;
 import com.szymon.demo.repository.UserRepository;
+import lombok.SneakyThrows;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.util.Date;
 
 import static com.szymon.demo.security.SecurityConstants.ROLE_DOCTOR;
 import static com.szymon.demo.security.SecurityConstants.ROLE_PATIENT;
 
 @Component
 public class DbSeeder implements CommandLineRunner {
+
+    private static final String FILE_PATH = "src/main/resources/static/images/";
+
+    private static final String EXTENSION = ".png";
 
     private final Logger logger = LoggerFactory.getLogger(DbSeeder.class);
 
@@ -58,14 +72,14 @@ public class DbSeeder implements CommandLineRunner {
                 "Janusz",
                 "Kowalski",
                 "dendysta",
-                "JanuszKowalski@gmail.com",
+                "januszKowalski@gmail.com",
                 123456789
         );
         Doctor doctor2 = new Doctor(
                 "Janusz",
                 "Tracz",
                 "okulista",
-                "JanuszTracz@gmail.com",
+                "januszTracz@gmail.com",
                 345654189
         );
         Doctor doctor3 = new Doctor(
@@ -79,15 +93,20 @@ public class DbSeeder implements CommandLineRunner {
                 "Zofia",
                 "Grzyb",
                 "pediatra",
-                "ZofiaGrzyb@gmail.com",
+                "zofiaGrzyb@gmail.com",
                 874453321
         );
 
         doctorRepository.insert(doctor0);
+        doctorRepository.updateImageProfile(doctor0.getEmail(), load(doctor0.getEmail(), "doctor/"), null);
         doctorRepository.insert(doctor1);
+        doctorRepository.updateImageProfile(doctor1.getEmail(), load(doctor1.getEmail(), "doctor/"), null);
         doctorRepository.insert(doctor2);
+        doctorRepository.updateImageProfile(doctor2.getEmail(), load(doctor2.getEmail(), "doctor/"), null);
         doctorRepository.insert(doctor3);
+        doctorRepository.updateImageProfile(doctor3.getEmail(), load(doctor3.getEmail(), "doctor/"), null);
         doctorRepository.insert(doctor4);
+        doctorRepository.updateImageProfile(doctor4.getEmail(), load(doctor4.getEmail(), "doctor/"), null);
 
         Patient patient0 = new Patient(
                 "user1",
@@ -102,15 +121,18 @@ public class DbSeeder implements CommandLineRunner {
                 456321789
         );
         Patient patient2 = new Patient(
-                "Karyna",
+                "Koryna",
                 "Wieckiewicz",
-                "kainka@gmail.com",
+                "koryna@gmail.com",
                 906754321
         );
 
         patientRepository.insert(patient0);
+        patientRepository.updateImageProfile(patient0.getEmail(), load(patient0.getEmail(), "patient/"), null);
         patientRepository.insert(patient1);
+        patientRepository.updateImageProfile(patient1.getEmail(), load(patient1.getEmail(), "patient/"), null);
         patientRepository.insert(patient2);
+        patientRepository.updateImageProfile(patient2.getEmail(), load(patient2.getEmail(), "patient/"), null);
 
         logger.info("Add default users into database.");
 
@@ -125,5 +147,15 @@ public class DbSeeder implements CommandLineRunner {
         userRepository.insert(new User("JanuszTracz@gmail.com", encoder.encode("1233"), ROLE_DOCTOR, true));
         userRepository.insert(new User("marzenaKipiel@gmail.com", encoder.encode("1233"), ROLE_DOCTOR, true));
         userRepository.insert(new User("ZofiaGrzyb@gmail.com", encoder.encode("1233"), ROLE_DOCTOR, false));
+    }
+
+    @SneakyThrows
+    public MultipartFile load(String title, String userPath) {
+
+        File file = new File(FILE_PATH + userPath + title + EXTENSION);
+        FileInputStream input = new FileInputStream(file);
+
+        return new MockMultipartFile("file",
+                file.getName(), "image/png", IOUtils.toByteArray(input));
     }
 }

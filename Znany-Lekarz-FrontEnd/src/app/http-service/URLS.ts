@@ -19,4 +19,8 @@ export abstract class URLS {
   public static DOCTOR_SIGN_UP = '/doctor/sign-up';
 
   public static PATIENT_SIGN_UP = '/patient/sign-up';
+
+  public static PHOTO = 'http://localhost:8080/photo';
+
+  public static PHOTO_BASE = 'http://localhost:8080';
 }

@@ -1,0 +1,8 @@
+<h4>Moje wizty</h4>
+<p *ngFor="let visit of user.visits">
+  <b>dzien wizyty:</b> {{ visit.timeVisit | date: 'medium' }} <br>
+  <b>czas trwania:</b> {{visit.duration}} <br>
+  <b>typ wizyty:</b> {{visit.typeVisit}} <br>
+  <b>id doctora:</b> {{visit.idDoctor}} <br>
+  <b>miejsce wizyty:</b> {{visit.address}} <br>
+</p>

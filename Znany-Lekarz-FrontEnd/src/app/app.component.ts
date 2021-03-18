@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { AuthService } from './auth/auth.service';
-import { Router } from '@angular/router';
+import {Component} from '@angular/core';
+import {AuthService} from './auth/auth.service';
+import {Router} from '@angular/router';
 import {HttpService} from "./http-service/http.service";
 
 @Component({
@@ -10,7 +10,7 @@ import {HttpService} from "./http-service/http.service";
 })
 export class AppComponent {
 
-  constructor( private authService: AuthService, private router: Router/*, private httpService: HttpService*/) {
+  constructor(public authService: AuthService, private router: Router/*, private httpService: HttpService*/) {
     // this.httpService.getAllAvailableSpecializations().subscribe(value => {
     //   // this.doctorSpecializations = value;
     // }, error => {

@@ -1,28 +1,16 @@
-<div *ngIf="patient">
+<div id="container" *ngIf="user">
 
-  Imie: {{patient.firstName}} <br>
-  Nazwisko: {{patient.lastName}} <br><br><br>
-  Lista twoich wizyt:<br><br>
-  <p *ngFor="let visit of patient.visits">
-      dzien wizyty: {{ visit.timeVisit | date: 'medium' }} <br>
-      czas trwania: {{visit.duration}} <br>
-      typ wizyty: {{visit.typeVisit}} <br>
-      id doctora: {{visit.idDoctor}} <br>
-  </p>
+  <div id="user-general-info">
+    <app-user-details [user]="user"></app-user-details>
+  </div>
+
+  <div id="user-visit">
+    <app-user-visit [user]="user"></app-user-visit>
+  </div>
+
+  <div *ngIf="user.role === role.ROLE_DOCTOR" id="doctor-visit-settings">
+    <app-doctor-visit-settings [doctor]="user"></app-doctor-visit-settings>
+  </div>
 </div>
 
-<div *ngIf="doctor">
-
-  Imie: {{doctor.firstName}} <br>
-  Nazwisko: {{doctor.lastName}} <br>
-  specializacja: {{doctor.specialization}} <br><br><br>
-  Lista twoich wizyt:<br><br>
-  <p *ngFor="let visit of doctor.visitList">
-    dzien wizyty: {{ visit.timeVisit | date: 'medium' }} <br>
-    czas trwania: {{visit.duration}} <br>
-    typ wizyty: {{visit.typeVisit}} <br>
-    id doctora: {{visit.idDoctor}} <br>
-  </p>
-
-</div>
 

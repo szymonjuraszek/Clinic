@@ -1,14 +1,9 @@
 import {Component, ViewChild} from '@angular/core';
 import {AuthService} from '../auth.service';
 import {NgForm} from '@angular/forms';
-import {Patient} from 'src/app/model/patient';
-import {Doctor} from 'src/app/model/doctor';
+import {Patient} from 'src/app/model/Patient';
+import {Doctor} from 'src/app/model/Doctor';
 import {Router} from "@angular/router";
-import {merge, Observable, Subject, Subscription} from "rxjs";
-import {debounceTime, distinctUntilChanged, filter, map} from "rxjs/operators";
-import {NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
-import {LocalCacheService} from "../../service/local-cache.service";
-
 
 @Component({
   selector: 'app-register-page',

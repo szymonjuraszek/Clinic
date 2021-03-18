@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
 })
-export class LoginPageComponent{
+export class LoginPageComponent {
 
   constructor(private authService: AuthService, private router: Router) {
   }

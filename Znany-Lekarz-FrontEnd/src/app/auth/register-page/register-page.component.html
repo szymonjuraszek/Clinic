@@ -3,7 +3,8 @@
   <div>
     <div class="radioButton">
       <label>
-        <input type="radio" value="patient" name="person" #patient [checked]="true" (change)="handleChange($event)"> Patient
+        <input type="radio" value="patient" name="person" #patient [checked]="true" (change)="handleChange($event)">
+        Patient
       </label>
       <label>
         <input type="radio" value="doctor" name="person" #doctor (change)="handleChange($event)"> Doctor
@@ -44,10 +45,10 @@
       <input ngModel type="text" name="specialization" required>
     </div>
 
-<!--    <div class="inputButton" *ngIf="doctor.checked">-->
-<!--      <label>Miejsce</label>-->
-<!--      <input ngModel type="text" name="place" required>-->
-<!--    </div>-->
+    <!--    <div class="inputButton" *ngIf="doctor.checked">-->
+    <!--      <label>Miejsce</label>-->
+    <!--      <input ngModel type="text" name="place" required>-->
+    <!--    </div>-->
 
     <div class="registerButton">
       <button type="submit" [disabled]="formData.invalid">Zarejestruj</button>

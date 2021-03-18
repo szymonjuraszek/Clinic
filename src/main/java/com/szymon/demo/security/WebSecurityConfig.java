@@ -45,8 +45,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, SIGN_UP_URL ).permitAll()
-                .antMatchers(HttpMethod.POST, SIGN_UP_URL_PATIENT ).permitAll()
+                .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+                .antMatchers(HttpMethod.POST, SIGN_UP_URL_PATIENT).permitAll()
                 .antMatchers(HttpMethod.GET).permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -65,7 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     CorsConfigurationSource corsConfigurationSource() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
-        corsConfiguration.setExposedHeaders(Arrays.asList("Authorization"));
+        corsConfiguration.setExposedHeaders(Arrays.asList("Authorization", "Location"));
         source.registerCorsConfiguration("/**", corsConfiguration);
 
 //        CorsConfiguration configuration = new CorsConfiguration();

@@ -1,0 +1,58 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edytuj Profil</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form #formData="ngForm">
+      <div class="form-group">
+        <div class="input-group">
+          <div>
+            <div class="inputButton">
+              <label>Imię</label>
+              <input [ngModel]="user.firstName" type="text" name="firstName" required>
+            </div>
+
+            <div class="inputButton">
+              <label>Nazwisko</label>
+              <input [ngModel]="user.lastName" type="text" name="lastName" required>
+            </div>
+
+            <div class="inputButton">
+              <label>Numer telefonu</label>
+              <input [ngModel]="user.phoneNumber" type="tel" name="phoneNumber" required>
+            </div>
+
+            <div *ngIf="user.role == role.ROLE_DOCTOR" id="doctor-fields">
+              <div class="inputButton">
+                <label>Specializacja</label>
+                <input [ngModel]="user.specialization" type="text" name="specialization" required>
+              </div>
+
+              <div class="inputButton">
+                <label>Stopien naukowy</label>
+                <input [ngModel]="user.degree" type="text" name="degree" required>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" [disabled]="formData.invalid" (click)="modal.close(formData)">
+      Save
+    </button>
+  </div>
+</ng-template>
+
+<br>
+<div>
+  <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Edit</button>
+</div>

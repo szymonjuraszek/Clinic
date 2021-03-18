@@ -1,5 +1,4 @@
 <div *ngIf="this.doctorSpecializations">
-  <h1>Witaj na stronie glownej</h1>
 
   <h5>Znajdz lekarza (podaj specializacje)</h5>
   <div>
@@ -10,6 +9,8 @@
 
   <div class="not-found-message">{{this.notFoundMessage}}</div>
 
-  <app-item [doctors]="doctors"></app-item>
+</div>
 
+<div id="founded-doctors">
+  <app-item [doctors]="doctors"></app-item>
 </div>

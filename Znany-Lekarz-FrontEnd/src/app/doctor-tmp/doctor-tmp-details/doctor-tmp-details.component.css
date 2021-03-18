@@ -1,18 +1,15 @@
-#infoAboutDoctor
-{
+#infoAboutDoctor {
   width: 40%;
   float: left;
 
 
 }
 
-#orderVisitTemplate
-{
+#orderVisitTemplate {
   float: left;
 }
 
-#calendar
-{
+#calendar {
   height: 25%;
   width: 40%;
   background-color: rgb(63, 89, 128);
@@ -20,7 +17,6 @@
 
 }
 
-#usun
-{
+#usun {
   clear: both;
 }

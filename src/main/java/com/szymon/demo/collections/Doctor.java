@@ -1,6 +1,5 @@
 package com.szymon.demo.collections;
 
-
 import com.szymon.demo.security.SecurityConstants;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -11,7 +10,7 @@ import java.util.List;
 
 @Data
 @Document(collection = "Doctor")
-public class Doctor  {
+public class Doctor {
 
     @Id
     private String id;
@@ -30,10 +29,14 @@ public class Doctor  {
 
     private String role = SecurityConstants.ROLE_DOCTOR;
 
+    private Photo profileImage;
+
+    private String degree;
+
     public Doctor() {
     }
 
-    public Doctor( String firstName, String lastName, String specialization, String email, int phoneNumber) {
+    public Doctor(String firstName, String lastName, String specialization, String email, int phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.specialization = specialization;

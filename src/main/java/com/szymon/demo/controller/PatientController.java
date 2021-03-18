@@ -6,9 +6,10 @@ import com.szymon.demo.collections.Patient;
 import com.szymon.demo.collections.User;
 import com.szymon.demo.dto.PatientDTO;
 import com.szymon.demo.exceptions.EmailUserBusyException;
-import com.szymon.demo.repository.DoctorRepository;
-import com.szymon.demo.repository.PatientRepository;
+import com.szymon.demo.exceptions.UserNotFoundException;
 import com.szymon.demo.repository.UserRepository;
+import com.szymon.demo.repository.doctor.DoctorRepository;
+import com.szymon.demo.repository.patient.PatientRepository;
 import com.szymon.demo.security.SecurityConstants;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -17,11 +18,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.security.Principal;
 import java.util.Optional;
+
+import static com.szymon.demo.security.SecurityConstants.BASE_URL;
 
 @CrossOrigin
 @RestController
@@ -73,22 +76,20 @@ public class PatientController {
                     true
             ));
 
-            URI location = ServletUriComponentsBuilder
+            URI location = UriComponentsBuilder
                     .fromPath("/patient/{id}")
                     .buildAndExpand(savedPatient.getId())
                     .toUri();
 
             return ResponseEntity.created(location).build();
         } else {
-            new EmailUserBusyException("email-" + email);
+            throw new EmailUserBusyException("email-" + email);
         }
-
-        return (ResponseEntity<Object>) ResponseEntity.badRequest();
     }
 
     @Secured("ROLE_PATIENT")
     @GetMapping(path = "/profile")
-    public Patient getProfile(Principal principal) {
+    public PatientDTO getProfile(Principal principal) {
 
         Optional<Patient> patient = patientRepository.findByEmail(principal.getName());
 
@@ -96,7 +97,7 @@ public class PatientController {
             return null;
         }
 
-        return patient.get();
+        return convertToDto(patient.get());
     }
 
     private Patient convertToEntity(PatientDTO patientDTO) {
@@ -104,6 +105,40 @@ public class PatientController {
     }
 
     private PatientDTO convertToDto(Patient patient) {
-        return modelMapper.map(patient, PatientDTO.class);
+        PatientDTO patientDTO = modelMapper.map(patient, PatientDTO.class);
+
+        if (patient.getProfileImage() != null) {
+            patientDTO.setImageLocation(
+                    BASE_URL +
+                            SecurityConstants.PATIENT_IMAGE_PROFILE_URL +
+                            patient.getEmail() +
+//                            Objects.toString(patient.getProfileImage().getTimestamp(), "") +
+                            "." +
+                            patient.getProfileImage().getFormat().toLowerCase());
+//                    "?t=" + Objects.toString(patient.getProfileImage().getTimestamp(), ""));
+        }
+
+        return patientDTO;
+    }
+
+    @Secured("ROLE_PATIENT")
+    @PutMapping(path = "/profile")
+    public PatientDTO updateProfile(@RequestBody PatientDTO patientToUpdateDTO, Principal principal) {
+
+        Patient patientToUpdate = convertToEntity(patientToUpdateDTO);
+
+        Optional<Patient> currentPatient = patientRepository.findByEmail(principal.getName());
+
+        if (currentPatient.isEmpty()) {
+            throw new UserNotFoundException("User hasn't founded: " + principal.getName());
+        }
+
+        currentPatient.get().setFirstName(patientToUpdate.getFirstName());
+        currentPatient.get().setLastName(patientToUpdate.getLastName());
+        currentPatient.get().setPhoneNumber(patientToUpdate.getPhoneNumber());
+
+        Patient result = patientRepository.save(currentPatient.get());
+
+        return convertToDto(result);
     }
 }

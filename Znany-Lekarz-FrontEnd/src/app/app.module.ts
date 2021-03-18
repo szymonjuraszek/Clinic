@@ -1,33 +1,38 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 
-import { AppComponent } from './app.component';
-import { HttpService } from './http-service/http.service';
-import { AppRoutingModule } from './app.routing.module';
-import { HomeComponent } from './home/home.component';
+import {AppComponent} from './app.component';
+import {HttpService} from './http-service/http.service';
+import {AppRoutingModule} from './app.routing.module';
+import {HomeComponent} from './home/home.component';
 
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { LoginPageComponent } from './auth/login-page/login-page.component';
-import { RegisterPageComponent } from './auth/register-page/register-page.component';
-import { AuthService } from './auth/auth.service';
-import { AuthInerceptor } from './auth/auth.interceptor';
-import { CookieService } from 'ngx-cookie-service';
-import { ItemComponent } from './item/item.component';
-import { LocalService } from './service/local.service';
-import { UserProfileComponent } from './user-profile/user-profile.component';
-import { DoctorTmpDetailsComponent } from './doctor-tmp/doctor-tmp-details/doctor-tmp-details.component';
+import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
+import {LoginPageComponent} from './auth/login-page/login-page.component';
+import {RegisterPageComponent} from './auth/register-page/register-page.component';
+import {AuthService} from './auth/auth.service';
+import {AuthInerceptor} from './auth/auth.interceptor';
+import {CookieService} from 'ngx-cookie-service';
+import {ItemComponent} from './home/item/item.component';
+import {UserProfileComponent} from './user-profile/user-profile.component';
+import {DoctorTmpDetailsComponent} from './doctor-tmp/doctor-tmp-details/doctor-tmp-details.component';
 
 
 import 'core-js/es6/reflect';
 import 'core-js/es7/reflect';
 import 'zone.js/dist/zone';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { SpecializationFieldComponent } from './specialization-field/specialization-field.component';
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {SpecializationFieldComponent} from './home/specialization-field/specialization-field.component';
 import {PasswordValidatorDirective} from "./auth/register-page/directive/password-validator.directive";
+import {UserDetailsComponent} from './user-profile/user-details/user-details.component';
+import {UserVisitComponent} from './user-profile/user-visit/user-visit.component';
+import {EditModalComponent} from './user-profile/user-details/edit-modal/edit-modal.component';
+import {DoctorVisitSettingsComponent} from './user-profile/doctor-visit-settings/doctor-visit-settings.component';
+import {EditImageModalComponent} from './user-profile/user-details/edit-image-modal/edit-image-modal.component';
+import {LoggerModule, NgxLoggerLevel} from "ngx-logger";
 
 
 @NgModule({
@@ -41,7 +46,12 @@ import {PasswordValidatorDirective} from "./auth/register-page/directive/passwor
     UserProfileComponent,
     DoctorTmpDetailsComponent,
     SpecializationFieldComponent,
-    PasswordValidatorDirective
+    PasswordValidatorDirective,
+    UserDetailsComponent,
+    UserVisitComponent,
+    EditModalComponent,
+    DoctorVisitSettingsComponent,
+    EditImageModalComponent
   ],
   imports: [
     BrowserModule,
@@ -50,18 +60,24 @@ import {PasswordValidatorDirective} from "./auth/register-page/directive/passwor
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    LoggerModule.forRoot({
+      serverLoggingUrl: '/api/logs',
+      level: NgxLoggerLevel.DEBUG,
+      serverLogLevel: NgxLoggerLevel.ERROR
+    })
   ],
-  providers: [HttpService, AuthService, LocalService, CookieService,
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInerceptor,
-    multi: true
-  }
+  providers: [HttpService, AuthService, CookieService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInerceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
 
 platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
   // Ensure Angular destroys itself on hgot reloads.

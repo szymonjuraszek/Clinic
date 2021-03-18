@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {HttpService} from '../http-service/http.service';
-import {Doctor} from '../model/doctor';
+import {Doctor} from '../model/Doctor';
 import {Subscription} from 'rxjs';
 import {HttpErrorResponse} from "@angular/common/http";
 import {LocalCacheService} from "../service/local-cache.service";
@@ -23,7 +23,7 @@ export class HomeComponent {
 
   constructor(private localCacheService: LocalCacheService, private httpService: HttpService) {
     this.doctorSpecializations = this.localCacheService.getDoctorSpecializations();
-    this.specializationSubscription = this.localCacheService.getDoctorSpecializationsSubject().subscribe( (specializations) => {
+    this.specializationSubscription = this.localCacheService.getDoctorSpecializationsSubject().subscribe((specializations) => {
       this.doctorSpecializations = specializations;
     });
   }
