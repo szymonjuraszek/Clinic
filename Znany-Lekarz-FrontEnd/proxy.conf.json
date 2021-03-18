@@ -14,5 +14,13 @@
   "/visit/*": {
     "target": "http://localhost:8080",
     "secure": false
+  },
+  "/photo": {
+    "target": "http://localhost:8080",
+    "secure": false
+  },
+  "/images/patient/*": {
+    "target": "http://localhost:8080",
+    "secure": false
   }
 }

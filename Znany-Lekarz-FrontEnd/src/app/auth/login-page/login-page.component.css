@@ -1,38 +1,36 @@
-form
-{
+form {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 20px;
   text-align: center;
 }
 
-h1
-{
+h1 {
   padding-top: 100px;
 }
 
-.logPanel
-{
+.logPanel {
   margin-top: 20px;
 }
 
-.inputButton
-{
+.inputButton {
   margin-bottom: 10px;
 }
 
-.radioButton
-{
+.radioButton {
   margin-bottom: 10px;
 }
 
-.error{
+.error {
   color: red;
 }
 
-h5
-{
+h5 {
   margin-top: 20px;
+}
+
+.error-message {
+  color: red;
 }
 
 

@@ -1,0 +1,25 @@
+<h4>Informacje podstawowe</h4>
+
+<div id="general-info-container">
+  <div class="column-info">
+    <app-edit-image-modal [user]="user"></app-edit-image-modal>
+  </div>
+
+  <div class="column-info">
+    <b>Imie:</b> {{user.firstName}} <br>
+    <b>Nazwisko:</b> {{user.lastName}} <br>
+    <b>Numer telefonu:</b> {{user.phoneNumber}} <br>
+    <div *ngIf="user.specialization"><b>Specializacja:</b> {{user.specialization}}</div>
+    <div *ngIf="user.degree"><b>Stopień naukowy:</b> {{user.degree}}</div>
+  </div>
+
+  <div class="column-info" *ngFor="let place of user.places">
+    Ulica: {{ place.street | date: 'medium' }} <br>
+    Kod pocztowy: {{place.zip_code}} <br>
+    Miejscowość: {{place.city}} <br>
+  </div>
+
+  <app-edit-modal [user]="user"></app-edit-modal>
+</div>
+
+

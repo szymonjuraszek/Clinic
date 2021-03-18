@@ -4,28 +4,29 @@ import com.szymon.demo.collections.Doctor;
 import com.szymon.demo.collections.Patient;
 import com.szymon.demo.collections.User;
 import com.szymon.demo.dto.DoctorDTO;
-import com.szymon.demo.dto.PatientDTO;
 import com.szymon.demo.exceptions.EmailUserBusyException;
 import com.szymon.demo.exceptions.UserNotFoundException;
-import com.szymon.demo.repository.DoctorRepository;
-import com.szymon.demo.repository.PatientRepository;
+import com.szymon.demo.repository.doctor.DoctorRepository;
+import com.szymon.demo.repository.patient.PatientRepository;
 import com.szymon.demo.repository.UserRepository;
 import com.szymon.demo.security.SecurityConstants;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.security.Principal;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+
+import static com.szymon.demo.security.SecurityConstants.BASE_URL;
 
 @CrossOrigin
 @RestController
@@ -78,26 +79,26 @@ public class DoctorController {
                     true
             ));
 
-            URI location = ServletUriComponentsBuilder
+            URI location = UriComponentsBuilder
                     .fromPath("/patient/{id}")
                     .buildAndExpand(savedDoctor.getId())
                     .toUri();
 
             return ResponseEntity.created(location).build();
         } else {
-            new EmailUserBusyException("email-" + email);
+            throw new EmailUserBusyException("email-" + email);
         }
-
-        return (ResponseEntity<Object>) ResponseEntity.badRequest();
     }
 
     @GetMapping(path = "/id/{id}")
-    public Doctor getDoctorById(@PathVariable String id) {
+    public DoctorDTO getDoctorById(@PathVariable String id) {
+
         Optional<Doctor> doctor = doctorRepository.findById(id);
-        System.out.println("Wypisuje dane :    " + doctor);
+
+        this.logger.info("Get doctor: " + doctor);
 
         if (doctor.isPresent()) {
-            return doctor.get();
+            return convertToDto(doctor.get());
         } else {
             throw new UserNotFoundException("id-" + id);
         }
@@ -116,13 +117,13 @@ public class DoctorController {
     }
 
     @GetMapping(path = "/specialization/{specialization}")
-    public List<Doctor> getDoctorsBySpecialization(@PathVariable String specialization) {
+    public List<DoctorDTO> getDoctorsBySpecialization(@PathVariable String specialization) {
         List<Doctor> doctors = doctorRepository.findBySpecialization(specialization);
 
         if (doctors.isEmpty()) {
             throw new UserNotFoundException("specialization -" + specialization);
         } else {
-            return doctors;
+            return convertListToDto(doctors);
         }
     }
 
@@ -136,6 +137,63 @@ public class DoctorController {
     }
 
     private DoctorDTO convertToDto(Doctor doctor) {
-        return modelMapper.map(doctor, DoctorDTO.class);
+        DoctorDTO doctorDTO = modelMapper.map(doctor, DoctorDTO.class);
+
+        if (doctor.getProfileImage() != null) {
+            doctorDTO.setImageLocation(
+                    BASE_URL +
+                            SecurityConstants.DOCTOR_IMAGE_PROFILE_URL +
+                            Objects.toString(doctor.getProfileImage().getTimestamp(), "") +
+                            doctor.getProfileImage().getTimestamp() +
+                            doctor.getEmail() + "." +
+                            doctor.getProfileImage().getFormat().toLowerCase());
+        }
+
+        return doctorDTO;
+    }
+
+    private List<DoctorDTO> convertListToDto(List<Doctor> doctors) {
+        List<DoctorDTO> doctorsDTO = new LinkedList<>();
+
+        for (Doctor doctor : doctors) {
+            DoctorDTO doctorDTO = modelMapper.map(doctor, DoctorDTO.class);
+
+            if (doctor.getProfileImage() != null) {
+                doctorDTO.setImageLocation(
+                        BASE_URL +
+                                SecurityConstants.DOCTOR_IMAGE_PROFILE_URL +
+                                doctor.getEmail() +
+                                "." +
+                                doctor.getProfileImage().getFormat().toLowerCase());
+//                                "?t=" + Objects.toString(doctor.getProfileImage().getTimestamp(), ""));
+            }
+
+            doctorsDTO.add(doctorDTO);
+        }
+
+        return doctorsDTO;
+    }
+
+    @Secured(SecurityConstants.ROLE_DOCTOR)
+    @PutMapping(path = "/profile")
+    public DoctorDTO updateProfile(@RequestBody DoctorDTO doctorToUpdateDTO, Principal principal) {
+
+        Doctor doctorToUpdate = convertToEntity(doctorToUpdateDTO);
+
+        Optional<Doctor> currentDoctor = doctorRepository.findByEmail(principal.getName());
+
+        if (currentDoctor.isEmpty()) {
+            throw new UserNotFoundException("User hasn't founded: " + principal.getName());
+        }
+
+        currentDoctor.get().setFirstName(doctorToUpdate.getFirstName());
+        currentDoctor.get().setLastName(doctorToUpdate.getLastName());
+        currentDoctor.get().setPhoneNumber(doctorToUpdate.getPhoneNumber());
+        currentDoctor.get().setSpecialization(doctorToUpdate.getSpecialization());
+        currentDoctor.get().setDegree(doctorToUpdate.getDegree());
+
+        Doctor result = doctorRepository.save(currentDoctor.get());
+
+        return convertToDto(result);
     }
 }

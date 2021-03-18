@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Doctor} from '../model/doctor';
-import {Patient} from '../model/patient';
+import {Doctor} from '../model/Doctor';
+import {Patient} from '../model/Patient';
 import {CookieService} from 'ngx-cookie-service';
 import {URLS} from "../http-service/URLS";
 
@@ -41,6 +41,7 @@ export class AuthService {
   }
 
   logout() {
+    console.error('usuwam access token')
     this.cookieService.delete('access_token');
     this.userStatus = false;
   }

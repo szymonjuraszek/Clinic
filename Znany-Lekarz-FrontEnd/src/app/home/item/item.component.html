@@ -1,0 +1,32 @@
+<div id="doctor-item-container">
+  <ol *ngFor="let doctor of doctors">
+    <div class="doctor-general-info">
+      <div id="doctor-image">
+        <img src="{{doctor.imageLocation}}" alt="Trulli" width="254" height="199">
+      </div>
+      <h5>
+        <a routerLink="/DoctorTmp/{{doctor.id}}"
+           (click)="sendData(doctor)">lek. {{doctor.degree}} {{doctor.firstName}} {{doctor.lastName}}</a>
+      </h5>
+      <p>{{doctor.specialization}}</p>
+    </div>
+    <div class="doctor-visits-calendar">
+      <!--      <p>Simple datepicker</p>-->
+
+      <!--      <ngb-datepicker #dp [(ngModel)]="model" (navigate)="date = $event.next"></ngb-datepicker>-->
+
+      <!--      <hr/>-->
+
+      <!--      <button class="btn btn-sm btn-outline-primary mr-2" (click)="selectToday()">Select Today</button>-->
+      <!--      <button class="btn btn-sm btn-outline-primary mr-2" (click)="dp.navigateTo()">To current month</button>-->
+      <!--      <button class="btn btn-sm btn-outline-primary mr-2" (click)="dp.navigateTo({year: 2013, month: 2})">To Feb 2013</button>-->
+
+      <!--      <hr/>-->
+
+      <!--      <pre>Month: {{ date.month }}.{{ date.year }}</pre>-->
+      <!--      <pre>Model: {{ model | json }}</pre>-->
+    </div>
+  </ol>
+</div>
+
+

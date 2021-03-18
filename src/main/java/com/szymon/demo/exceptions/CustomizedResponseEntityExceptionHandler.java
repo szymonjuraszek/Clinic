@@ -20,7 +20,7 @@ public class CustomizedResponseEntityExceptionHandler
     protected ResponseEntity<Object> handleAllExceptions
             (Exception ex, WebRequest request) {
 
-        logger.error(ex.getMessage());
+        logger.error(ex);
 
         ExceptionResponse exceptionResponse =
                 new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));

@@ -1,48 +1,54 @@
-<form (ngSubmit)="register(formData,patient)" #formData="ngForm">
+<form (ngSubmit)="register(patient)" #formData="ngForm">
   <h1>Zarejestruj sie</h1>
   <div>
     <div class="radioButton">
       <label>
-        <input type="radio" value="patient" name="person" #patient checked>Patient
+        <input type="radio" value="patient" name="person" #patient [checked]="true" (change)="handleChange($event)">
+        Patient
       </label>
       <label>
-        <input type="radio" value="doctor" name="person" #doctor>Doctor
+        <input type="radio" value="doctor" name="person" #doctor (change)="handleChange($event)"> Doctor
       </label>
     </div>
 
     <div class="inputButton">
-      <label>E-mail</label>
+      <label>Email</label>
       <input ngModel type="email" #email="ngModel" name="email" email required>
-      <div *ngIf="!email.valid && email.dirty">Pole wymagane!</div>
+      <div class="error-message" *ngIf="!email.valid && email.touched">Niepoprawna struktura emaila!</div>
 
     </div>
 
     <div class="inputButton">
-      <label>Password</label>
-      <input ngModel type="password" #password="ngModel" name="password" required>
-      <div *ngIf="!password.valid && password.dirty">Pole wymagane!</div>
+      <label>Hasło</label>
+      <input ngModel type="password" #password="ngModel" name="password" passwordValidator>
+      <div class="error-message" *ngIf="password.touched && password.errors">Hasło musi mieć conajmniej 3 znaki!</div>
 
     </div>
 
     <div class="inputButton">
-      <label>First-name</label>
+      <label>Imię</label>
       <input ngModel type="text" name="firstName" required>
     </div>
 
     <div class="inputButton">
-      <label>Last-name</label>
+      <label>Nazwisko</label>
       <input ngModel type="text" name="lastName" required>
     </div>
 
     <div class="inputButton">
-      <label>Phone-number</label>
+      <label>Numer telefonu</label>
       <input ngModel type="tel" name="phoneNumber" required>
     </div>
 
-    <div class="inputButton" *ngIf="doctor.checked == true">
-      <label>Specialization</label>
+    <div class="inputButton" *ngIf="doctor.checked">
+      <label>Specializacja</label>
       <input ngModel type="text" name="specialization" required>
     </div>
+
+    <!--    <div class="inputButton" *ngIf="doctor.checked">-->
+    <!--      <label>Miejsce</label>-->
+    <!--      <input ngModel type="text" name="place" required>-->
+    <!--    </div>-->
 
     <div class="registerButton">
       <button type="submit" [disabled]="formData.invalid">Zarejestruj</button>

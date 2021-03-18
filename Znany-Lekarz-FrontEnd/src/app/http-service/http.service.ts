@@ -1,16 +1,18 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Doctor } from '../model/doctor';
-import { Visit } from '../model/visit';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Doctor} from '../model/Doctor';
+import {Visit} from '../model/Visit';
 import {URLS} from "./URLS";
+import {Patient} from "../model/Patient";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getDoctorsBySpecialization(specialization: string): Observable<Array<Doctor>> {
     return this.http.get<Array<Doctor>>(URLS.DOCTOR_SPECIALIZATION + specialization);
@@ -39,7 +41,28 @@ export class HttpService {
     return this.http.get<Array<Visit>>(URLS.VISIT_SORT + id);
   }
 
-  getAllAvailableSpecializations(): Observable<Array<String>> {
-    return this.http.get<Array<String>>(URLS.DOCTOR_SPECIALIZATIONS);
+  getAllAvailableSpecializations(): Observable<Array<string>> {
+    return this.http.get<Array<string>>(URLS.DOCTOR_SPECIALIZATIONS);
+  }
+
+  updateDoctor(doctorToUpdate: Doctor) {
+    return this.http.put(URLS.DOCTOR_PROFILE, doctorToUpdate, {
+      observe: 'response'
+    });
+  }
+
+  updatePatient(patientToUpdate: Patient) {
+    return this.http.put(URLS.PATIENT_PROFILE, patientToUpdate, {
+      observe: 'response'
+    });
+  }
+
+  addProfileImage(image): Observable<HttpResponse<Object>> {
+    let formData: FormData = new FormData();
+    formData.append('image', image);
+
+    return this.http.post(URLS.PHOTO, formData, {
+      observe: 'response'
+    });
   }
 }

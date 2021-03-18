@@ -18,4 +18,7 @@ public class SecurityConstants {
     public static final String SIGN_UP_URL_PATIENT = "/patient/sign-up";
     public static final String ROLE_PATIENT = "ROLE_PATIENT";
     public static final String ROLE_DOCTOR = "ROLE_DOCTOR";
+    public static final String PATIENT_IMAGE_PROFILE_URL = "/images/patient/";
+    public static final String DOCTOR_IMAGE_PROFILE_URL = "/images/doctor/";
+    public static final String BASE_URL = "http://localhost:8080";
 }

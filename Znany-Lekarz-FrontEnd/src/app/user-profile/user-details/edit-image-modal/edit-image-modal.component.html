@@ -1,0 +1,35 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Ustaw zdjecie profilowe</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('canceled update image')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form #formData="ngForm">
+      <div class="form-group">
+        <div class="input-group">
+
+          <div id="image-setter">
+            <img *ngIf="selectedFile" id="blah" [src]="imageSrc" [width]="150" [height]="150"/> <br><br>
+            <input ngModel type="file" name="files" (change)="uploadFile($event)" required>
+          </div>
+
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" [disabled]="formData.invalid" (click)="modal.close(formData)">
+      Save
+    </button>
+  </div>
+</ng-template>
+
+<!--<img *ngIf="ifImageUploaded" [src]="imageSrc" [width]="150" [height]="150"/> <br>-->
+<img *ngIf="ifImageUploaded" [src]="this.img.src" alt="sth" [width]="150" [height]="150"/> <br>
+<div>
+  <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Ustaw zdjecie</button>
+</div>

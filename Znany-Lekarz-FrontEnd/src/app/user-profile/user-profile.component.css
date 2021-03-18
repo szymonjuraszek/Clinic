@@ -1,0 +1,19 @@
+#user-general-info {
+  border-bottom: 2px solid #00C3A5;
+  padding: 20px 50px 50px 50px;
+}
+
+#user-visit {
+  border-bottom: 2px solid #00C3A5;
+  padding: 20px 50px 50px 50px;
+}
+
+#doctor-visit-settings {
+  border-bottom: 2px solid #00C3A5;
+  padding: 20px 50px 50px 50px;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+}

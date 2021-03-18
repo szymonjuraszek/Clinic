@@ -1,35 +1,33 @@
 <div *ngIf="doctor">
   <div>
-    Aby moc sie umowic na wizyte(tylko pacjenci)
+    Aby moc sie umowic na wizyte (tylko pacjenci)
     <a routerLink="/loginPage">zaloguj sie!</a> <br> <br> <br>
   </div>
 
   <div id="infoAboutDoctor">
-      Imie: {{doctor.firstName}} <br>
-      Nazwisko: {{doctor.lastName}} <br>
-      Telefon: {{doctor.phoneNumber}} <br>
-      specializacja: {{doctor.specialization}}  <br><br><br>
-      <p *ngFor="let visit of doctor.visitList">
-          data wizyty:{{ visit.timeVisit | date: 'medium' }} <br>
-          czas trwania:{{visit.duration}} <br>
+    Imie: {{doctor.firstName}} <br>
+    Nazwisko: {{doctor.lastName}} <br>
+    Telefon: {{doctor.phoneNumber}} <br>
+    specializacja: {{doctor.specialization}}  <br><br><br>
+    <p *ngFor="let visit of doctor.visitList">
+      data wizyty:{{ visit.timeVisit | date: 'medium' }} <br>
+      czas trwania:{{visit.duration}} <br>
 
-      </p>
-
-
+    </p>
   </div>
 
-  <div *ngIf="idTokenn"  id="orderVisitTemplate">
+  <div *ngIf="this.role == 'ROLE_PATIENT'" id="orderVisitTemplate">
 
     <form (ngSubmit)="order(formData)" #formData="ngForm">
-      <h3>Wypelnij formularz zeby umowic wizyte</h3>
+      <h3>Umow wizyte</h3>
       Wybierz date wizyty: <br>
-      <input [ngModel] ="tmpDate" id="dateOfVisit" name="dateOfVisit" type="date" required>
+      <input [ngModel]="tmpDate" id="dateOfVisit" name="dateOfVisit" type="date" required>
       <br>
 
       Wybierz godzine w ktorej przyjmie Cie lekarz: <br>
       <select ngModel id="select" name="listHours" required>
         <option *ngFor="let timeVisit of timeVisits" [value]="timeVisit.name">
-          <p >{{timeVisit.name}}</p>
+          <p>{{timeVisit.name}}</p>
         </option>
       </select>
 

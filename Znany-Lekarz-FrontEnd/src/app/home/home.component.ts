@@ -1,10 +1,9 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {HttpService} from '../http-service/http.service';
-import {Doctor} from '../model/doctor';
-import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
-import {Observable, Subject, merge} from 'rxjs';
-import {debounceTime, distinctUntilChanged, filter, map} from 'rxjs/operators';
+import {Doctor} from '../model/Doctor';
+import {Subscription} from 'rxjs';
 import {HttpErrorResponse} from "@angular/common/http";
+import {LocalCacheService} from "../service/local-cache.service";
 
 @Component({
   selector: 'app-home',
@@ -14,32 +13,25 @@ import {HttpErrorResponse} from "@angular/common/http";
 export class HomeComponent {
   doctorSpecializations: Array<String>;
 
-  doctors: Array<Doctor>;
+  specialization: String;
 
-  isDataAvailable: boolean = false;
+  doctors: Array<Doctor>;
 
   notFoundMessage: string;
 
-  // @ts-ignore
-  @ViewChild('instance', {static: true}) instance: NgbTypeahead;
-  focus$ = new Subject<string>();
-  click$ = new Subject<string>();
+  specializationSubscription: Subscription;
 
-  constructor(private httpService: HttpService) {
-    if (!this.doctorSpecializations) {
-      this.httpService.getAllAvailableSpecializations().subscribe(value => {
-        this.doctorSpecializations = value;
-        this.isDataAvailable = true;
-      }, error => {
-        console.log(error)
-      })
-    }
+  constructor(private localCacheService: LocalCacheService, private httpService: HttpService) {
+    this.doctorSpecializations = this.localCacheService.getDoctorSpecializations();
+    this.specializationSubscription = this.localCacheService.getDoctorSpecializationsSubject().subscribe((specializations) => {
+      this.doctorSpecializations = specializations;
+    });
   }
 
-  searchDoctors(specialization) {
+  searchDoctors(specialization: string) {
     this.notFoundMessage = '';
 
-    this.httpService.getDoctorsBySpecialization(specialization.value).subscribe((doctors) => {
+    this.httpService.getDoctorsBySpecialization(specialization).subscribe((doctors) => {
       console.log('Znaleziono lekarzy o danej specializaji');
       console.log(doctors);
       this.doctors = doctors;
@@ -52,14 +44,11 @@ export class HomeComponent {
     });
   }
 
-  search = (text$: Observable<string>) => {
-    const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
-    const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance.isPopupOpen()));
-    const inputFocus$ = this.focus$;
+  ngOnDestroy() {
+    this.specializationSubscription.unsubscribe();
+  }
 
-    return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
-      map(term => (term === '' ? this.doctorSpecializations
-        : this.doctorSpecializations.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
-    );
+  setSpecialization(specialization: string) {
+    this.specialization = specialization;
   }
 }

@@ -28,6 +28,8 @@ public class Patient {
 
     private String role = SecurityConstants.ROLE_PATIENT;
 
+    private Photo profileImage;
+
     public Patient() {
     }
 

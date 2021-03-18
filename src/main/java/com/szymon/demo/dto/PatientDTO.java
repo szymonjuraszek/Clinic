@@ -1,6 +1,8 @@
 package com.szymon.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.szymon.demo.collections.Visit;
+import com.szymon.demo.security.SecurityConstants;
 import lombok.Data;
 
 import javax.validation.constraints.*;
@@ -31,5 +33,10 @@ public class PatientDTO {
     private String password;
 
     private List<Visit> visits = new ArrayList<>();
+
+    @JsonProperty
+    private String role = SecurityConstants.ROLE_PATIENT;
+
+    private String imageLocation;
 }
 

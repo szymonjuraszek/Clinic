@@ -1,27 +1,27 @@
 <body>
-  <header class="logo">
-    <h1>Znany lekarz</h1>
+<header class="logo">
+  <h1>Lekarze Online</h1>
 
-    <nav>
-      <ul class="menu">
-        <li><a routerLink="/home">--Strona Główna--</a></li>
-        <li><a routerLink="/loginPage">--Logowanie--</a></li>
-        <li><a routerLink="/RegisterPage">--Rejestracja--</a></li>
-        <li><a *ngIf="authService.userStatus" routerLink="/UserProfile">--Profil--</a></li>
-        <button *ngIf="authService.userStatus" (click)="logout()">Wyloguj</button>
-      </ul>
-    </nav>
+  <nav>
+    <ul class="menu">
+      <li><a routerLink="/home">--Strona Główna--</a></li>
+      <li><a routerLink="/loginPage">--Logowanie--</a></li>
+      <li><a routerLink="/RegisterPage">--Rejestracja--</a></li>
+      <li><a *ngIf="authService.userStatus" routerLink="/UserProfile">--Profil--</a></li>
+      <button *ngIf="authService.userStatus" (click)="logout()">Wyloguj</button>
+    </ul>
+  </nav>
 
-  </header>
+</header>
 
-  <main>
+<main>
 
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 
-  </main>
+</main>
 
-  <footer>
-    Wykonal Szymon Juraszek
-  </footer>
+<footer>
+  Wykonal Szymon Juraszek
+</footer>
 
 </body>

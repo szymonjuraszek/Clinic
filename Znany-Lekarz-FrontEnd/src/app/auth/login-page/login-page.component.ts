@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent {
 
   constructor(private authService: AuthService, private router: Router) {
   }
@@ -19,10 +19,9 @@ export class LoginPageComponent implements OnInit {
 
   errorMessage: string;
 
-  ngOnInit() {
-  }
-
   login(formData: NgForm) {
+    this.errorMessage = '';
+
     this.authService.login(formData.value.email,
       formData.value.password).subscribe((res) => {
 
@@ -30,11 +29,11 @@ export class LoginPageComponent implements OnInit {
         this.authService.userStatus = true;
         this.router.navigate(['/UserProfile']);
       } else {
-        console.log('nie udalo sie')
+        this.errorMessage = 'Blad podczas logowania';
       }
 
     }, (error => {
-      console.error(error)
+      this.errorMessage = 'Blad podczas logowania';
     }));
 
     this.formData.reset();
