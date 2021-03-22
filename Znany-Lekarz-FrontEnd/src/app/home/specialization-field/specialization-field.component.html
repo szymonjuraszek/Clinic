@@ -3,11 +3,10 @@
   id="typeahead-focus"
   type="text"
   class="form-control"
+  [(ngModel)]="model"
   [ngbTypeahead]="search"
-  (focus)="onFocus($event)"
-  (click)="onClick($event)"
-  (keyup)="onKey($event)"
+  (focus)="focus$.next($any($event).target.value)"
+  (click)="click$.next($any($event).target.value)"
+  (ngModelChange)="this.specializationEvent.emit(this.model)"
   #instance="ngbTypeahead"
 />
-
-
