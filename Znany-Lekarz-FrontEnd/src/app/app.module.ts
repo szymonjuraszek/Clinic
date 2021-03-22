@@ -18,10 +18,9 @@ import {ItemComponent} from './home/item/item.component';
 import {UserProfileComponent} from './user-profile/user-profile.component';
 import {DoctorTmpDetailsComponent} from './doctor-tmp/doctor-tmp-details/doctor-tmp-details.component';
 
-
-import 'core-js/es6/reflect';
-import 'core-js/es7/reflect';
+import 'core-js/es/array';
 import 'zone.js/dist/zone';
+
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -33,6 +32,9 @@ import {EditModalComponent} from './user-profile/user-details/edit-modal/edit-mo
 import {DoctorVisitSettingsComponent} from './user-profile/doctor-visit-settings/doctor-visit-settings.component';
 import {EditImageModalComponent} from './user-profile/user-details/edit-image-modal/edit-image-modal.component';
 import {LoggerModule, NgxLoggerLevel} from "ngx-logger";
+import { AccordionModule } from 'ngx-bootstrap/accordion';
+
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -60,12 +62,14 @@ import {LoggerModule, NgxLoggerLevel} from "ngx-logger";
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
-    NgbModule.forRoot(),
+    RouterModule,
     LoggerModule.forRoot({
       serverLoggingUrl: '/api/logs',
       level: NgxLoggerLevel.DEBUG,
       serverLogLevel: NgxLoggerLevel.ERROR
-    })
+    }),
+    AccordionModule.forRoot(),
+    NgbModule
   ],
   providers: [HttpService, AuthService, CookieService,
     {

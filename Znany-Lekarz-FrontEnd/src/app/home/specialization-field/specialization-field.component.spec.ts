@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SpecializationFieldComponent } from './specialization-field.component';
 
@@ -6,7 +6,7 @@ describe('SpecializationFieldComponent', () => {
   let component: SpecializationFieldComponent;
   let fixture: ComponentFixture<SpecializationFieldComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ SpecializationFieldComponent ]
     })

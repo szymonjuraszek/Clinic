@@ -4,7 +4,7 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {Doctor} from 'src/app/model/Doctor';
 import {CookieService} from 'ngx-cookie-service';
 import {NgForm} from '@angular/forms';
-import * as jwt_decode from 'jwt-decode';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-doctor-tmp-details',

@@ -143,10 +143,10 @@ public class DbSeeder implements CommandLineRunner {
         logger.info("Add default admins into database.");
 
         userRepository.insert(new User("a", encoder.encode("a"), ROLE_DOCTOR, true));
-        userRepository.insert(new User("JanuszKowalski@gmail.com", encoder.encode("1233"), ROLE_DOCTOR, true));
-        userRepository.insert(new User("JanuszTracz@gmail.com", encoder.encode("1233"), ROLE_DOCTOR, true));
+        userRepository.insert(new User("januszKowalski@gmail.com", encoder.encode("1233"), ROLE_DOCTOR, true));
+        userRepository.insert(new User("januszTracz@gmail.com", encoder.encode("1233"), ROLE_DOCTOR, true));
         userRepository.insert(new User("marzenaKipiel@gmail.com", encoder.encode("1233"), ROLE_DOCTOR, true));
-        userRepository.insert(new User("ZofiaGrzyb@gmail.com", encoder.encode("1233"), ROLE_DOCTOR, false));
+        userRepository.insert(new User("zofiaGrzyb@gmail.com", encoder.encode("1233"), ROLE_DOCTOR, false));
     }
 
     @SneakyThrows
