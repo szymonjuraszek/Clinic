@@ -4,6 +4,7 @@ import com.szymon.demo.collections.Doctor;
 import com.szymon.demo.collections.Patient;
 import com.szymon.demo.collections.User;
 import com.szymon.demo.repository.doctor.DoctorRepository;
+import com.szymon.demo.repository.log.LogRepository;
 import com.szymon.demo.repository.patient.PatientRepository;
 import com.szymon.demo.repository.UserRepository;
 import lombok.SneakyThrows;
@@ -18,9 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.util.Date;
 
 import static com.szymon.demo.security.SecurityConstants.ROLE_DOCTOR;
 import static com.szymon.demo.security.SecurityConstants.ROLE_PATIENT;
@@ -40,17 +38,21 @@ public class DbSeeder implements CommandLineRunner {
 
     private final UserRepository userRepository;
 
+    private final LogRepository logRepository;
+
     private final PasswordEncoder encoder;
 
     public DbSeeder(
             DoctorRepository doctorRepository,
             PatientRepository patientRepository,
             UserRepository userRepository,
+            LogRepository logRepository,
             PasswordEncoder encoder
     ) {
         this.doctorRepository = doctorRepository;
         this.patientRepository = patientRepository;
         this.userRepository = userRepository;
+        this.logRepository = logRepository;
         this.encoder = encoder;
     }
 
@@ -60,6 +62,7 @@ public class DbSeeder implements CommandLineRunner {
         doctorRepository.deleteAll();
         patientRepository.deleteAll();
         userRepository.deleteAll();
+        logRepository.deleteAll();
 
         Doctor doctor0 = new Doctor(
                 "user2",

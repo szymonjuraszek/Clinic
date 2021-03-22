@@ -1,5 +1,8 @@
 package com.szymon.demo.security;
 
+import com.szymon.demo.logging.LoggingRequestFilter;
+import com.szymon.demo.logging.LoggingResponseFilter;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -7,23 +10,28 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.ExceptionTranslationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
 
-import static com.szymon.demo.security.SecurityConstants.SIGN_UP_URL;
-import static com.szymon.demo.security.SecurityConstants.SIGN_UP_URL_PATIENT;
+import static com.szymon.demo.security.SecurityConstants.*;
 
 
-@EnableWebSecurity
+@EnableWebSecurity/*(debug = true)*/
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -32,9 +40,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JWTAuthorizationFilter jwtAuthorizationFilter;
 
-    public WebSecurityConfig(UserDetailsService userDetailsService, JWTAuthorizationFilter jwtAuthorizationFilter) {
+    private final LoggingRequestFilter loggingRequestFilter;
+
+    private final LoggingResponseFilter loggingResponseFilter;
+
+    public WebSecurityConfig(
+            @Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService,
+            JWTAuthorizationFilter jwtAuthorizationFilter,
+            LoggingRequestFilter loggingRequestFilter,
+            LoggingResponseFilter loggingResponseFilter
+    ) {
         this.userDetailsService = userDetailsService;
         this.jwtAuthorizationFilter = jwtAuthorizationFilter;
+        this.loggingRequestFilter = loggingRequestFilter;
+        this.loggingResponseFilter = loggingResponseFilter;
     }
 
     @Override
@@ -47,12 +66,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL_PATIENT).permitAll()
-                .antMatchers(HttpMethod.GET).permitAll()
+//                .antMatchers(HttpMethod.GET, "/patient/profile").hasRole("PATIENT")
+                .antMatchers(HttpMethod.GET, PATIENT_IMAGE_PROFILE_URL + "**").permitAll()
+                .antMatchers(HttpMethod.GET, DOCTOR_IMAGE_PROFILE_URL + "**").permitAll()
+//                .antMatchers(HttpMethod.GET).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
                 .addFilterBefore(jwtAuthorizationFilter, JWTAuthenticationFilter.class)
+                .addFilterBefore(loggingRequestFilter, CorsFilter.class)
+                .addFilterAfter(loggingResponseFilter, ExceptionTranslationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.requestCache().disable();
     }
 
     @Override
@@ -85,4 +111,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }
