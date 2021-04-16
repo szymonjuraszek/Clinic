@@ -1,5 +1,5 @@
-import {Address} from "./Address";
 import {User} from "./User";
+import {PlaceVisitSettings} from "./PlaceVisitSettings";
 
 export interface Doctor extends User {
 
@@ -7,7 +7,7 @@ export interface Doctor extends User {
 
   specialization?: string;
 
-  places?: Array<Address>;
-
   degree?: string;
+
+  placeVisitSettingsArray: Array<PlaceVisitSettings>;
 }

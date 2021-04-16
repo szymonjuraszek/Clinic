@@ -5,6 +5,7 @@ import {Doctor} from '../model/Doctor';
 import {Visit} from '../model/Visit';
 import {URLS} from "./URLS";
 import {Patient} from "../model/Patient";
+import {PlaceVisitSettings} from "../model/PlaceVisitSettings";
 
 @Injectable({
   providedIn: 'root'
@@ -65,4 +66,11 @@ export class HttpService {
       observe: 'response'
     });
   }
+
+  addVisitPlaceSettings(placeVisitSettings: PlaceVisitSettings): Observable<HttpResponse<Object>>  {
+    return this.http.post(URLS.DOCTOR_VISIT_SETTINGS, placeVisitSettings, {
+      observe: 'response'
+    });
+  }
+
 }

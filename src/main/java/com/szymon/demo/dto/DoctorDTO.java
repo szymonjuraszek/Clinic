@@ -1,6 +1,7 @@
 package com.szymon.demo.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.szymon.demo.collections.PlaceVisitSettings;
 import com.szymon.demo.collections.Visit;
 import com.szymon.demo.security.SecurityConstants;
 import lombok.Data;
@@ -47,4 +48,6 @@ public class DoctorDTO {
     private String imageLocation;
 
     private String degree;
+
+    private List<PlaceVisitSettings> placeVisitSettingsArray = new ArrayList<>();
 }

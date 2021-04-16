@@ -2,3 +2,13 @@ h4 {
   text-align: center;
   padding-bottom: 10px;
 }
+
+#container {
+  display: flex;
+  justify-items: center;
+  justify-content: center;
+}
+
+accordion {
+  flex: 0.45;
+}

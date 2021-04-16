@@ -32,9 +32,13 @@ import {EditModalComponent} from './user-profile/user-details/edit-modal/edit-mo
 import {DoctorVisitSettingsComponent} from './user-profile/doctor-visit-settings/doctor-visit-settings.component';
 import {EditImageModalComponent} from './user-profile/user-details/edit-image-modal/edit-image-modal.component';
 import {LoggerModule, NgxLoggerLevel} from "ngx-logger";
-import { AccordionModule } from 'ngx-bootstrap/accordion';
+import {AccordionModule} from 'ngx-bootstrap/accordion';
 
-import { RouterModule } from '@angular/router';
+import {RouterModule} from '@angular/router';
+import {VisitLocationModalComponent} from './user-profile/doctor-visit-settings/visit-location-modal/visit-location-modal.component';
+import {NgxMaterialTimepickerModule} from "ngx-material-timepicker";
+import {VisitTimeSettingsComponent} from './user-profile/doctor-visit-settings/visit-location-modal/visit-time-settings/visit-time-settings.component';
+import {DayTranslationPipe} from "./pipe/DayTranslationPipe";
 
 
 @NgModule({
@@ -53,14 +57,16 @@ import { RouterModule } from '@angular/router';
     UserVisitComponent,
     EditModalComponent,
     DoctorVisitSettingsComponent,
-    EditImageModalComponent
+    EditImageModalComponent,
+    VisitLocationModalComponent,
+    VisitTimeSettingsComponent,
+    DayTranslationPipe
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    BrowserModule,
     BrowserAnimationsModule,
     RouterModule,
     LoggerModule.forRoot({
@@ -69,7 +75,8 @@ import { RouterModule } from '@angular/router';
       serverLogLevel: NgxLoggerLevel.ERROR
     }),
     AccordionModule.forRoot(),
-    NgbModule
+    NgbModule,
+    NgxMaterialTimepickerModule
   ],
   providers: [HttpService, AuthService, CookieService,
     {

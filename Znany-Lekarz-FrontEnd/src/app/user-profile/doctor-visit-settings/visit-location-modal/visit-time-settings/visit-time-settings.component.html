@@ -1,0 +1,20 @@
+<b>{{day | translate}}: </b>
+<div class="default-time-example" *ngFor="let fieldNumber of howManyFields; let i = index">
+  <input [ngxTimepicker]="dayTimeFrom" (ngModelChange)="validTimePicker($event, i*2)" class="timepicker-from"
+         [(ngModel)]="this.timeSetterFields[i*2]"
+         name="{{day}}_from_{{fieldNumber}}" placeholder="godzina od" aria-label="24hr format"
+         [format]="24"
+         readonly>
+  {{i}}
+  <ngx-material-timepicker #dayTimeFrom ></ngx-material-timepicker>
+  -
+  <input [ngxTimepicker]="dayTimeTo" (ngModelChange)="validTimePicker($event, i*2 + 1)" class="timepicker-to"
+         [(ngModel)]="this.timeSetterFields[i*2 + 1]"
+         name="{{day}}_to_{{fieldNumber}}" placeholder="godzina do" aria-label="24hr format"
+         [format]="24"
+         readonly>
+  <ngx-material-timepicker #dayTimeTo></ngx-material-timepicker>
+</div>
+
+<button class="btn btn-outline-primary" (click)="addNewTimeField()">Nowy</button>
+<button class="btn btn-outline-primary" (click)="removeTimeField()">Usuń</button>

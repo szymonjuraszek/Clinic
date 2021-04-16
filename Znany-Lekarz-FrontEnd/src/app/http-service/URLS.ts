@@ -23,4 +23,6 @@ export abstract class URLS {
   public static PHOTO = 'http://localhost:8080/photo';
 
   public static PHOTO_BASE = 'http://localhost:8080';
+
+  public static DOCTOR_VISIT_SETTINGS = 'doctor/visitSettings';
 }

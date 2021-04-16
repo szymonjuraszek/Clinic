@@ -1,0 +1,30 @@
+#location-add-button {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.btn-outline-primary {
+  border-color: #00C3A5;
+  color: #00C3A5;
+}
+
+/*.btn-outline-primary:focus {*/
+/*  border-color: #00C3A5;*/
+/*  color: #00C3A5;*/
+/*}*/
+
+form {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+}
+
+.inputButton {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.inputButton > label {
+  width: 150px;
+  text-align: left;
+}

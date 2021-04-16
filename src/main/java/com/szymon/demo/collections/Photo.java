@@ -8,7 +8,7 @@ public class Photo {
 
     private String title;
 
-    Long timestamp;
+    private Long timestamp;
 
     private String format;
 

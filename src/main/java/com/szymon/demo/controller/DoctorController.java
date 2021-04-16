@@ -2,8 +2,10 @@ package com.szymon.demo.controller;
 
 import com.szymon.demo.collections.Doctor;
 import com.szymon.demo.collections.Patient;
+import com.szymon.demo.collections.PlaceVisitSettings;
 import com.szymon.demo.collections.User;
 import com.szymon.demo.dto.DoctorDTO;
+import com.szymon.demo.dto.PlaceVisitSettingsDTO;
 import com.szymon.demo.exceptions.EmailUserBusyException;
 import com.szymon.demo.exceptions.UserNotFoundException;
 import com.szymon.demo.repository.doctor.DoctorRepository;
@@ -195,5 +197,24 @@ public class DoctorController {
         Doctor result = doctorRepository.save(currentDoctor.get());
 
         return convertToDto(result);
+    }
+
+    @Secured(SecurityConstants.ROLE_DOCTOR)
+    @PostMapping(path = "/visitSettings")
+    public void updateProfile(@RequestBody PlaceVisitSettingsDTO placeVisitSettingsDTO, Principal principal) {
+
+        Optional<Doctor> currentDoctor = doctorRepository.findByEmail(principal.getName());
+
+        if (currentDoctor.isEmpty()) {
+            throw new UserNotFoundException("User wasn't founded: " + principal.getName());
+        }
+
+        PlaceVisitSettings placeVisitSettings = modelMapper.map(placeVisitSettingsDTO, PlaceVisitSettings.class);
+
+        currentDoctor.get().getPlaceVisitSettingsArray().add(placeVisitSettings);
+
+        Doctor result = doctorRepository.save(currentDoctor.get());
+
+        System.out.println(result);
     }
 }

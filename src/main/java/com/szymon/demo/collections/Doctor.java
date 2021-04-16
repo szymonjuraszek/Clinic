@@ -33,6 +33,8 @@ public class Doctor {
 
     private String degree;
 
+    private List<PlaceVisitSettings> placeVisitSettingsArray = new ArrayList<>();
+
     public Doctor() {
     }
 

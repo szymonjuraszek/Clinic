@@ -1,0 +1,62 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Dodaj lokalizacje</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form #formData="ngForm">
+      <div class="form-group">
+
+        <div class="input-group">
+          <div>
+            <b>Podaj adres</b> <br> <br>
+
+            <div class="inputButton">
+              <label>Ulica </label>
+              <input ngModel type="text" name="street" required>
+            </div>
+
+            <div class="inputButton">
+              <label>Kod </label>
+              <input ngModel type="text" name="zip_code" required>
+            </div>
+
+            <div class="inputButton">
+              <label>Miasto </label>
+              <input ngModel type="text" name="city" required>
+            </div>
+
+            <div class="inputButton">
+              <label>Czas jednej wizyty </label>
+              <input ngModel type="number" name="visitDurationInMin" min="1" max="60" maxlength="2"
+                     (input)="validVisitDurationInMin($event)" required>
+            </div>
+
+            <br>
+
+            <b>Podaj ogolne godziny przyjęc dla każdego dnia tygodnia</b> <br> <br>
+
+            <div *ngFor="let day of days">
+              <app-visit-time-settings [day]="day"></app-visit-time-settings>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" [disabled]="formData.invalid" (click)="modal.close(formData)">
+      Save
+    </button>
+  </div>
+</ng-template>
+
+<div id="location-add-button">
+  <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Dodaj</button>
+</div>
+
