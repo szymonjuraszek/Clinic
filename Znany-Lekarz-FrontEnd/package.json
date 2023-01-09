@@ -36,7 +36,7 @@
     "ngx-bootstrap": "^6.2.0",
     "ngx-cookie-service": "^11.0.2",
     "ngx-logger": "^4.2.1",
-    "rrule": "^2.6.8",
+    "rrule": "^2.7.1",
     "rxjs": "~6.6.6",
     "rxjs-compat": "^6.6.6",
     "tslib": "^2.0.0",
